@@ -118,7 +118,7 @@ export class BoundingBox {
      */
     intersection(other: BoundingBox): BoundingBox {
         return new BoundingBox(Math.min(this.x1, other.x1), Math.min(this.y1, other.y1),
-                               Math.min(this.x2, other.x2), Math.min(this.y2, other.y2));
+                               Math.max(this.x2, other.x2), Math.max(this.y2, other.y2));
     }
 
     /**
@@ -127,7 +127,7 @@ export class BoundingBox {
      */
     union(other: BoundingBox): BoundingBox {
         return new BoundingBox(Math.max(this.x1, other.x1), Math.max(this.y1, other.y1),
-                               Math.max(this.x2, other.x2), Math.max(this.y2, other.y2));
+                               Math.min(this.x2, other.x2), Math.min(this.y2, other.y2));
     }
 
     /**

@@ -1,7 +1,7 @@
 {
   "name": "bounding-boxes",
-  "version": "1.1.2",
-  "description": "Math with bounding boxes like intersect, contains, etc.",
+  "version": "1.2.0",
+  "description": "Minimal (no dependencies) bounding boxes with cool functions such as intersects, containsPoint, union, intersection, ...",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run clean && tsc",
@@ -19,7 +19,20 @@
     "union",
     "intersects",
     "boxes",
-    "geometry"
+    "geometry",
+    "bounds",
+    "geo",
+    "placement",
+    "rectangle",
+    "rectangles",
+    "minimal",
+    "no-dependencies",
+    "place",
+    "placing",
+    "squares",
+    "square",
+    "include",
+    "includes"
   ],
   "author": "marr11317",
   "license": "MIT",
