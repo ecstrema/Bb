@@ -1,0 +1,40 @@
+{
+  "name": "bounding-boxes",
+  "version": "1.1.2",
+  "description": "Math with bounding boxes like intersect, contains, etc.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "test": "jest",
+    "clean": "rimraf dist/",
+    "coverage": "jest --coverage"
+  },
+  "keywords": [
+    "math",
+    "bounding box",
+    "bbox",
+    "rectangle",
+    "rectangles",
+    "intersection",
+    "union",
+    "intersects",
+    "boxes",
+    "geometry"
+  ],
+  "author": "marr11317",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "jest": "^26.4.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  },
+  "types": "dist/index.d.ts",
+  "readme": "Readme.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Marr11317/bounding-boxes"
+  }
+}
