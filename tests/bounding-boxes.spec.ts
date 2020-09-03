@@ -129,7 +129,7 @@ describe('intersects', () => {
     })
 })
 
-describe('intersection', () => {
+describe('union', () => {
     describe.each([
         [0, 0, 100, 100,        50, 50, 150, 150,       0, 0, 150, 150],
         [-100, 0, 100, 100,     50, 50, 100, 150,       -100, 0, 100, 150],
@@ -137,12 +137,12 @@ describe('intersection', () => {
 
     ])('%s', (x11, y11, x21, y21, x12, y12, x22, y22, x13, y13, x23, y23) => {
         test(`x11: ${x11}, y11: ${y11}, x21: ${x21}, y21: ${y21}, x12: ${x12}, y12: ${y12}, x22: ${x22}, y22: ${y22}, x13: ${x13}, y13: ${y13}, x23: ${x23}, y23: ${y23}`, () => {
-            expect(new BoundingBox(x11, y11, x21, y21).intersection(new BoundingBox(x12, y12, x22, y22))).toStrictEqual(new BoundingBox(x13, y13, x23, y23));
+            expect(new BoundingBox(x11, y11, x21, y21).union(new BoundingBox(x12, y12, x22, y22))).toStrictEqual(new BoundingBox(x13, y13, x23, y23));
         })
     })
 })
 
-describe('union', () => {
+describe('intersection', () => {
     describe.each([
         [0, 0, 100, 100,        50, 50, 150, 150,       50, 50, 100, 100],
         [-100, 0, 100, 100,     50, 50, 100, 150,       50, 50, 100, 100],
@@ -150,7 +150,7 @@ describe('union', () => {
 
     ])('%s', (x11, y11, x21, y21, x12, y12, x22, y22, x13, y13, x23, y23) => {
         test(`x11: ${x11}, y11: ${y11}, x21: ${x21}, y21: ${y21}, x12: ${x12}, y12: ${y12}, x22: ${x22}, y22: ${y22}, x13: ${x13}, y13: ${y13}, x23: ${x23}, y23: ${y23}`, () => {
-            expect(new BoundingBox(x11, y11, x21, y21).union(new BoundingBox(x12, y12, x22, y22))).toStrictEqual(new BoundingBox(x13, y13, x23, y23));
+            expect(new BoundingBox(x11, y11, x21, y21).intersection(new BoundingBox(x12, y12, x22, y22))).toStrictEqual(new BoundingBox(x13, y13, x23, y23));
         })
     })
 })
@@ -166,8 +166,10 @@ describe('offset', () => {
         test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${22}, xOffset: ${xOffset}, yOffset: ${yOffset},
           x1Final: ${x1Final}, y1Final: ${y1Final}, x2Final: ${x2Final}, y2Final: ${y2Final}`,
           () => {
-            expect(new BoundingBox(x1, y1, x2, y2).offset(xOffset, yOffset))
-              .toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
+            const b = new BoundingBox(x1, y1, x2, y2);
+            b.x += xOffset;
+            b.y += yOffset;
+            expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
         })
     })
 })
@@ -178,12 +180,14 @@ describe('move', () => {
         [-100, 0, 100, 100,     50, 50,         50, 50, 250, 150],
         [-100, 0, 100, -100,    0, 0,           0, 0, 200, 100],
 
-    ])('%s', (x1, y1, x2, y2, xOffset, yOffset, x1Final, y1Final, x2Final, y2Final) => {
-        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${22}, xOffset: ${xOffset}, yOffset: ${yOffset},
+    ])('%s', (x1, y1, x2, y2, newX, newY, x1Final, y1Final, x2Final, y2Final) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${22}, xOffset: ${newX}, yOffset: ${newY},
           x1Final: ${x1Final}, y1Final: ${y1Final}, x2Final: ${x2Final}, y2Final: ${y2Final}`,
           () => {
-            expect(new BoundingBox(x1, y1, x2, y2).move(xOffset, yOffset))
-              .toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
+            const b = new BoundingBox(x1, y1, x2, y2);
+            b.x = newX;
+            b.y = newY;
+            expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
         })
     })
 })

@@ -30,9 +30,9 @@ export class BoundingBox {
         this.orderX();
     }
 
-    /** The bounding box's first corner x's */
+    /** The bounding box's first corner's x */
     private _x1 : number;
-    /** The bounding box's first corner x's */
+    /** The bounding box's first corner's x */
     public get x1() : number {
         return this._x1;
     }
@@ -116,7 +116,7 @@ export class BoundingBox {
      * Returns the smallest rectangle enclosing this BoundingBox and `other`.
      * @param other The BoundingBox with which to intersect.
      */
-    intersection(other: BoundingBox): BoundingBox {
+    union(other: BoundingBox): BoundingBox {
         return new BoundingBox(Math.min(this.x1, other.x1), Math.min(this.y1, other.y1),
                                Math.max(this.x2, other.x2), Math.max(this.y2, other.y2));
     }
@@ -125,88 +125,51 @@ export class BoundingBox {
      * Returns the biggest rectangle enclosed in this BoundingBox and `other`.
      * @param other The other BoundingBox
      */
-    union(other: BoundingBox): BoundingBox {
+    intersection(other: BoundingBox): BoundingBox {
         return new BoundingBox(Math.max(this.x1, other.x1), Math.max(this.y1, other.y1),
                                Math.min(this.x2, other.x2), Math.min(this.y2, other.y2));
     }
 
     /**
-     * Move the box in such a way that the new x1 is the x provided
-     * and the new y1 is the provided y.
+     * The box's global x (lowest corner)
+     * Use this property to move the box around without changing its width.
      *
-     * Height and width are kept intact
-     * @param x the new x1
-     * @param y the new y1
+     * @example
+     * ```
+     * a = new BoundingBox(0, 0, 10, 10);
+     * // a.x = 0, a.x1 = 0, a.x2 = 10
      *
-     * @returns `this` for chaining.
+     * a.x = 10
+     * // a.x = 10, a.x1 = 10, a.x2 = 20
+     * ```
      */
-    move(x: number, y: number): BoundingBox {
-        return this.moveX(x).moveY(y);
-    }
-
-    /**
-     * Move the box in such a way that the new x1 is the x provided
-     *
-     * Height and width are kept intact (x2 is moved)
-     * @param x The new x1
-     *
-     * @returns `this` for chaining
-     */
-    moveX(x: number): BoundingBox {
+    public get x(): number { return this._x1; }
+    public set x(x: number) {
         const w = this.width;
 
         this._x1 = x;
         this._x2 = x + w;
-        return this;
     }
 
     /**
-     * Move the box in such a way that the new y1 is the y provided.
+     * The box's global y (lowest corner)
+     * Use this property to move the box around without changing its height.
      *
-     * Height and width are kept intact (y2 is moved)
-     * @param y The new y1
+     * @example
+     * ```
+     * a = new BoundingBox(0, 0, 10, 10);
+     * // a.y = 0, a.y1 = 0, a.y2 = 10
      *
-     * @returns `this` for chaining
+     * a.x = 10
+     * // a.y = 10, a.y1 = 10, a.y2 = 20
+     * ```
      */
-    moveY(y: number): BoundingBox {
-        const w = this.height;
+    public get y(): number { return this._y1; }
+    public set y(y: number) {
+        const h = this.height;
 
         this._y1 = y;
-        this._y2 = y + w;
-        return this;
-    }
-
-    /**
-     * Offset the the box by x and y.
-     * @param x How much to offset the box over the x axis.
-     * @param y How much to offset the box over the y axis.
-     *
-     * @returns `this` for chaining.
-     */
-    offset(x: number, y: number): BoundingBox {
-        return this.offsetX(x).offsetY(y);
-    }
-
-    /**
-     * Offset the the box by y.
-     * @param y How much to offset the box on the y axis
-     */
-    offsetY(y: number): BoundingBox {
-        this._y1 += y;
-        this._y2 += y;
-
-        return this;
-    }
-
-    /**
-     * Offset the the box by x.
-     * @param x How much to offset the box on the x axis
-     */
-    offsetX(x: number): BoundingBox {
-        this._x1 += x;
-        this._x2 += x;
-
-        return this;
+        this._y2 = y + h;
     }
 
     /**
