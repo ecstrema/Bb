@@ -1,4 +1,60 @@
 import { BoundingBox } from '../src/bounding-boxes'
+
+describe('modify properties', () => {
+    test('modify x1', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        b.x1 = 10
+        expect(b.x1).toBe(10);
+        b.x1 = 110;
+        expect(b.x1).toBe(100);
+    });
+    test('modify x2', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        b.x2 = 10
+        expect(b.x2).toBe(10);
+        b.x2 = -10;
+        expect(b.x2).toBe(0);
+    })
+    test('modify y1', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        b.y1 = 10
+        expect(b.y1).toBe(10);
+        b.y1 = 110;
+        expect(b.y1).toBe(100);
+    })
+    test('modify y2', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        b.y2 = 10
+        expect(b.y2).toBe(10);
+        b.y2 = -10;
+        expect(b.y2).toBe(0);
+    })
+    test('modify width', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        expect(b.width).toBe(100);
+        b.width = 10;
+        expect(b.width).toBe(10);
+        expect(b.x1).toBe(0);
+        expect(b.x2).toBe(10);
+        b.width = -10;
+        expect(b.width).toBe(10);
+        expect(b.x1).toBe(-10);
+        expect(b.x2).toBe(0);
+    })
+    test('modify height', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        expect(b.height).toBe(100);
+        b.height = 10;
+        expect(b.height).toBe(10);
+        expect(b.y1).toBe(0);
+        expect(b.y2).toBe(10);
+        b.height = -10;
+        expect(b.height).toBe(10);
+        expect(b.y1).toBe(-10);
+        expect(b.y2).toBe(0);
+    })
+})
+
 describe('containsPoint', () => {
     describe.each([
         [0, 0, 100, 100, 10,    10,     true    ],
