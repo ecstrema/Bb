@@ -1,13 +1,14 @@
 {
   "name": "bounding-boxes",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Minimal (no dependencies) bounding boxes with cool functions such as intersects, containsPoint, union, intersection, ...",
   "main": "dist/bounding-boxes.js",
   "scripts": {
     "build": "npm run clean && tsc",
     "test": "jest",
     "clean": "rimraf dist/",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "math",
