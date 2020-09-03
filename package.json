@@ -1,6 +1,6 @@
 {
   "name": "bounding-boxes",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Minimal (no dependencies) bounding boxes with cool functions such as intersects, containsPoint, union, intersection, ...",
   "main": "dist/bounding-boxes.js",
   "scripts": {

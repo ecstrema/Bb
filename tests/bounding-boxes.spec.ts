@@ -154,3 +154,36 @@ describe('union', () => {
         })
     })
 })
+
+describe('offset', () => {
+    describe.each([
+        [0, 0, 100, 100,        50, 50,       50, 50, 150, 150],
+        [-100, 0, 100, 100,     50, 100,      -50, 100, 150, 200],
+        [-100, -100, 100, 0,    0, 0,         -100, -100, 100, 0],
+        [-100, 0, 100, -100,    -5, -10,      -105, -110, 95, -10],
+
+    ])('%s', (x1, y1, x2, y2, xOffset, yOffset, x1Final, y1Final, x2Final, y2Final) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${22}, xOffset: ${xOffset}, yOffset: ${yOffset},
+          x1Final: ${x1Final}, y1Final: ${y1Final}, x2Final: ${x2Final}, y2Final: ${y2Final}`,
+          () => {
+            expect(new BoundingBox(x1, y1, x2, y2).offset(xOffset, yOffset))
+              .toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
+        })
+    })
+})
+
+describe('move', () => {
+    describe.each([
+        [0, 0, 100, 100,        50, 50,         50, 50, 150, 150],
+        [-100, 0, 100, 100,     50, 50,         50, 50, 250, 150],
+        [-100, 0, 100, -100,    0, 0,           0, 0, 200, 100],
+
+    ])('%s', (x1, y1, x2, y2, xOffset, yOffset, x1Final, y1Final, x2Final, y2Final) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${22}, xOffset: ${xOffset}, yOffset: ${yOffset},
+          x1Final: ${x1Final}, y1Final: ${y1Final}, x2Final: ${x2Final}, y2Final: ${y2Final}`,
+          () => {
+            expect(new BoundingBox(x1, y1, x2, y2).move(xOffset, yOffset))
+              .toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
+        })
+    })
+})

@@ -131,6 +131,44 @@ export class BoundingBox {
     }
 
     /**
+     * Move the box in such a way that the new x1 is the x provided
+     * and the new y1 is the provided y.
+     *
+     * Height and width are kept intact
+     * @param x the new x1
+     * @param y the new y1
+     *
+     * @returns `this` for chaining.
+     */
+    move(x: number, y: number): BoundingBox {
+        const h = this.height;
+        const w = this.width;
+
+        this._x1 = x;
+        this._y1 = y;
+        this._x2 = x + w;
+        this._y2 = y + h;
+
+        return this;
+    }
+
+    /**
+     * Offset the the box by x and y.
+     * @param x How much to offset the box over the x axis.
+     * @param y How much to offset the box over the y axis.
+     *
+     * @returns `this` for chaining.
+     */
+    offset(x: number, y: number): BoundingBox {
+        this._x1 += x;
+        this._x2 += x;
+        this._y1 += y;
+        this._y2 += y;
+
+        return this;
+    }
+
+    /**
      * Ensure that x1 is smaller than x2, and swap if needed.
      * Do the same for y1 and y2.
      * @ignore
