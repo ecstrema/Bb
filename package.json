@@ -1,0 +1,47 @@
+{
+  "name": "bouncing-score",
+  "version": "1.0.0",
+  "description": "chord sheet web renderer",
+  "main": "dist/bounding-boxes.js",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "test": "jest",
+    "clean": "rimraf dist/",
+    "coverage": "jest --coverage",
+    "lint": "eslint . --ext .ts --fix",
+    "lint:ci": "eslint . --ext .ts"
+  },
+  "keywords": [
+    "music",
+    "sheet",
+    "music",
+    "chord",
+    "symbols",
+    "chords"
+  ],
+  "author": "marr11317",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "eslint": "^7.10.0",
+    "jest": "^26.4.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  },
+  "types": "dist/bounding-boxes.d.ts",
+  "readme": "Readme.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marr11317/bouncing-score.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Marr11317/bouncing-score/issues"
+  },
+  "homepage": "https://github.com/Marr11317/bouncing-score#readme"
+}
