@@ -63,5 +63,11 @@ describe('element', () => {
             expect(aba.absoluteBbox()).toStrictEqual(new BoundingBox(4, 34, 96, 68));
             expect(ac. absoluteBbox()).toStrictEqual(new BoundingBox(2, 72, 50, 98));
         })
+
+        // canvas testing requires additionnal info.
+        // see https://www.npmjs.com/package/canvas
+        // and https://github.com/jsdom/jsdom#canvas-support
+        // test('layout', () => {
+        // })
     })
 })

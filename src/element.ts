@@ -18,10 +18,10 @@ export class BbElement extends BbTreeNode {
 
     /**
      * Creates an instance of BbElement.
-     * @param [parent=null]
+     * @param [par=null]
      */
-    constructor(parent: BbElement | null = null) {
-        super(parent)
+    constructor(par: BbElement | null = null) {
+        super(par)
     }
 
     /**
@@ -36,6 +36,18 @@ export class BbElement extends BbTreeNode {
     children(): BbElement[] {
         return super.children() as BbElement[];
     }
+
+
+    /**
+     * Overridden to prevent having to cast the result of parent() to `BbElement` every time.
+     */
+    public parent() : BbElement {
+        return super.parent() as BbElement;
+    }
+    public setParent(v : BbElement) {
+        super.setParent(v);
+    }
+
 
     /**
      * The sum of the parents' X offsets
@@ -88,9 +100,16 @@ export class BbElement extends BbTreeNode {
      * - Loop through children to set their x and y offset properties.
      * - set this.bbox.height and this.bbox.width.
      */
-    layout(context: CanvasRenderingContext2D) {
+    async layout(context: CanvasRenderingContext2D): Promise<void> {
         this.children().forEach((child) => {
             console.warn(`unhandled child of ${this.type} during layout: ${child.type}`);
         });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public get toString(): string {
+        return this.type;
     }
 }

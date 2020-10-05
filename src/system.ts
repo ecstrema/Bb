@@ -16,23 +16,17 @@ export class BbSystem extends BbElement {
 
     /**
      * Creates an instance of BbSystem.
-     * @param [parent=null] the parent element
+     * @param [par=null] the parent element
      */
-    constructor(parent: BbElement | null = null) {
-        super(parent)
+    constructor(par: BbElement | null = null) {
+        super(par)
     }
 
     /**
      * @inheritdoc
      */
-    layout(context: CanvasRenderingContext2D): void {
-
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public get toString(): string {
-        return this.type;
+    async layout(context: CanvasRenderingContext2D): Promise<void> {
+        this.bbox.height = 100;
+        this.bbox.width = 100;
     }
 }

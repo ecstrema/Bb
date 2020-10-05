@@ -1,5 +1,3 @@
-import { BbElement } from "./element";
-
 /**
  * Tree Node class
  *
@@ -33,11 +31,12 @@ export class BbTreeNode {
 
     /**
      * Creates an instance of BbTreeNode.
+     * @param [parent=null] the parent element
      */
-    constructor(parent: BbElement | null = null) {
-        this._parent = parent;
+    constructor(par: BbTreeNode | null = null) {
+        this._parent = par;
         this._children = [];
-        parent?.appendChild(this);
+        par?.appendChild(this);
     }
 
     /**

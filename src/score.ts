@@ -1,4 +1,5 @@
 import { BbElement } from "./element";
+import { BbSystem } from "./system";
 
 /**
  * The score element.
@@ -13,18 +14,25 @@ export class BbScore extends BbElement {
 
     /**
      * Creates an instance of BbSystem.
-     * @param [parent=null] the parent element
+     * @param [par=null] the parent element
      */
-    constructor(parent: BbElement | null = null) {
-        super(parent)
+    constructor(par: BbElement | null = null) {
+        super(par)
     }
 
     /**
-   * @inheritdoc
-   */
-    layoutChildren(context: CanvasRenderingContext2D): void {
+     * @inheritdoc
+     */
+    async layout(context: CanvasRenderingContext2D): Promise<void> {
         this.bbox.height = context.canvas.height;
         this.bbox.width = context.canvas.width;
+
+        const promises: Promise<void>[] = []
+        this.children().forEach(child => {
+            if (child instanceof BbSystem)
+                promises.push(child.layout(context))
+        });
+        Promise.all(promises);
     }
 
 }
