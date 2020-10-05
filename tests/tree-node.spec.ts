@@ -3,15 +3,15 @@ import { BbTreeNode } from '../src/tree-node';
 describe('BbTreeNode', () => {
     describe('constructor', () => {
         test("without parent", () => {
-            expect(new BbTreeNode().parent).toBe(null);
+            expect(new BbTreeNode().parent()).toBe(null);
         });
         test("with parent", () => {
             const parent = new BbTreeNode();
-            expect(new BbTreeNode(parent).parent).toBe(parent);
-            expect(parent.children.length).toBe(1);
+            expect(new BbTreeNode(parent).parent()).toBe(parent);
+            expect(parent.children().length).toBe(1);
             const child2 = new BbTreeNode(parent);
-            expect(child2.parent).toBe(parent);
-            expect(parent.children.length).toBe(2);
+            expect(child2.parent()).toBe(parent);
+            expect(parent.children().length).toBe(2);
         });
     });
     describe('toString', () => {
@@ -35,11 +35,11 @@ describe('BbTreeNode', () => {
                 for (let i = 0; i < childCount; i++) {
                     childArray[i] = new BbTreeNode();
                 }
-                const begLength = parent.children.length;
+                const begLength = parent.children().length;
                 parent.insertChildren(index, ...childArray);
-                expect(parent.children.length).toBe(begLength + childCount);
+                expect(parent.children().length).toBe(begLength + childCount);
                 for (let i = 0; i < childCount; i++) {
-                    expect(parent.children[index + i]).toBe(childArray[i]);
+                    expect(parent.children()[index + i]).toBe(childArray[i]);
                 }
             });
         });
@@ -59,11 +59,11 @@ describe('BbTreeNode', () => {
                 for (let i = 0; i < childCount; i++) {
                     childArray[i] = new BbTreeNode();
                 }
-                const begLength = parent.children.length;
+                const begLength = parent.children().length;
                 parent.appendChildren(...childArray);
-                expect(parent.children.length).toBe(begLength + childCount);
+                expect(parent.children().length).toBe(begLength + childCount);
                 for (let i = 0; i < childCount; i++) {
-                    expect(parent.children[begLength + i]).toBe(childArray[i]);
+                    expect(parent.children()[begLength + i]).toBe(childArray[i]);
                 }
             });
         });
@@ -83,11 +83,11 @@ describe('BbTreeNode', () => {
                 for (let i = 0; i < childCount; i++) {
                     childArray[i] = new BbTreeNode();
                 }
-                const begLength = parent.children.length;
+                const begLength = parent.children().length;
                 parent.prependChildren(...childArray);
-                expect(parent.children.length).toBe(begLength + childCount);
+                expect(parent.children().length).toBe(begLength + childCount);
                 for (let i = 0; i < childCount; i++) {
-                    expect(parent.children[i]).toBe(childArray[i]);
+                    expect(parent.children()[i]).toBe(childArray[i]);
                 }
             });
         });
@@ -96,22 +96,22 @@ describe('BbTreeNode', () => {
         test('prepend to root', () => {
             const root = new BbTreeNode();
             root.prependChild(new BbTreeNode());
-            expect(root.children.length).toEqual(1);
+            expect(root.children().length).toEqual(1);
             const child2 = new BbTreeNode();
             root.prependChild(child2);
-            expect(root.children.length).toEqual(2);
-            expect(root.children[0]).toBe(child2);
+            expect(root.children().length).toEqual(2);
+            expect(root.children()[0]).toBe(child2);
         });
     });
     describe('appendChild', () => {
         test('append to root', () => {
             const root = new BbTreeNode();
             root.appendChild(new BbTreeNode());
-            expect(root.children.length).toEqual(1);
+            expect(root.children().length).toEqual(1);
             const child2 = new BbTreeNode();
             root.appendChild(child2);
-            expect(root.children.length).toEqual(2);
-            expect(root.children[1]).toBe(child2);
+            expect(root.children().length).toEqual(2);
+            expect(root.children()[1]).toBe(child2);
         });
     });
 
@@ -123,9 +123,9 @@ describe('BbTreeNode', () => {
                         new BbTreeNode()),
                     new BbTreeNode());
                 expect(root.isRoot()).toBe(true);
-                expect(root.children[1].isRoot()).toBe(false);
-                expect(root.children[0].isRoot()).toBe(false);
-                expect(root.children[0].children[0].isRoot()).toBe(false);
+                expect(root.children()[1].isRoot()).toBe(false);
+                expect(root.children()[0].isRoot()).toBe(false);
+                expect(root.children()[0].children()[0].isRoot()).toBe(false);
             });
             test('isLeaf', () => {
                 const root = new BbTreeNode().appendChildren(
@@ -133,9 +133,9 @@ describe('BbTreeNode', () => {
                         new BbTreeNode()),
                     new BbTreeNode());
                 expect(root.isLeaf()).toBe(false);
-                expect(root.children[1].isLeaf()).toBe(true);
-                expect(root.children[0].isLeaf()).toBe(false);
-                expect(root.children[0].children[0].isLeaf()).toBe(true);
+                expect(root.children()[1].isLeaf()).toBe(true);
+                expect(root.children()[0].isLeaf()).toBe(false);
+                expect(root.children()[0].children()[0].isLeaf()).toBe(true);
             });
             test('isBranch', () => {
                 const root = new BbTreeNode().appendChildren(
@@ -143,9 +143,9 @@ describe('BbTreeNode', () => {
                         new BbTreeNode()),
                     new BbTreeNode());
                 expect(root.isBranch()).toBe(false);
-                expect(root.children[1].isBranch()).toBe(false);
-                expect(root.children[0].isBranch()).toBe(true);
-                expect(root.children[0].children[0].isBranch()).toBe(false);
+                expect(root.children()[1].isBranch()).toBe(false);
+                expect(root.children()[0].isBranch()).toBe(true);
+                expect(root.children()[0].children()[0].isBranch()).toBe(false);
             });
         });
         test('drop', () => {
@@ -153,19 +153,19 @@ describe('BbTreeNode', () => {
                 new BbTreeNode().appendChildren(
                     new BbTreeNode()),
                 new BbTreeNode());
-            const dropped = root.children[0].drop();
-            expect(dropped.parent).toBe(null);
-            expect(root.children.length).toBe(1);
+            const dropped = root.children()[0].drop();
+            expect(dropped.parent()).toBe(null);
+            expect(root.children().length).toBe(1);
         });
         test('change parent', () => {
             const root = new BbTreeNode().appendChildren(
                 new BbTreeNode().appendChildren(
                     new BbTreeNode()),
                 new BbTreeNode());
-            const changed = root.children[0];
-            changed.changeParent(root.children[1]);
-            expect(changed.parent).toBe(root.children[0]);
-            expect(root.children.length).toBe(1);
+            const changed = root.children()[0];
+            changed.changeParent(root.children()[1]);
+            expect(changed.parent()).toBe(root.children()[0]);
+            expect(root.children().length).toBe(1);
         });
         describe('walk', () => {
             test('before', () => {
@@ -179,7 +179,7 @@ describe('BbTreeNode', () => {
                 Before.walk(root, (node) => {
                     (node as Before).before = true;
                 });
-                const flattened = [root, root.children[0], root.children[1], root.children[0].children[0]] as Before[];
+                const flattened = [root, root.children()[0], root.children()[1], root.children()[0].children()[0]] as Before[];
                 flattened.forEach((child: Before) => {
                     expect(child.before).toBe(true);
                 });
@@ -195,7 +195,7 @@ describe('BbTreeNode', () => {
                 After.walk(root, (node) => {
                     (node as After).after = true;
                 });
-                const flattened = [root, root.children[0], root.children[1], root.children[0].children[0]] as After[];
+                const flattened = [root, root.children()[0], root.children()[1], root.children()[0].children()[0]] as After[];
                 flattened.forEach((child: After) => {
                     expect(child.after).toBe(true);
                 });
@@ -213,7 +213,7 @@ describe('BbTreeNode', () => {
                     (node as Both).before = true;
                     (node as Both).after = true;
                 });
-                const flattened = [root, root.children[0], root.children[1], root.children[0].children[0]] as Both[];
+                const flattened = [root, root.children()[0], root.children()[1], root.children()[0].children()[0]] as Both[];
                 flattened.forEach((child: Both) => {
                     expect(child.before).toBe(true);
                     expect(child.after).toBe(true);
@@ -236,10 +236,10 @@ describe('BbTreeNode', () => {
                                 new BbTreeNode()),
                             new BbTreeNode());
             const newNode = new BbTreeNode();
-            const oldNode = root.children[0].children[0].moveDeeper(newNode);
-            expect(root.children[0].children[0].children.length).toBe(1);
-            expect(root.children.length).toBe(2);
-            expect(root.children[0].children[0].children.includes(oldNode)).toBe(true);
+            const oldNode = root.children()[0].children()[0].moveDeeper(newNode);
+            expect(root.children()[0].children()[0].children().length).toBe(1);
+            expect(root.children().length).toBe(2);
+            expect(root.children()[0].children()[0].children().includes(oldNode)).toBe(true);
         });
         test('replaceWith', () => {
             const root = new BbTreeNode().appendChildren(
@@ -247,12 +247,12 @@ describe('BbTreeNode', () => {
                                 new BbTreeNode()),
                             new BbTreeNode());
             const newNode = new BbTreeNode();
-            const oldNode = root.children[0].children[0].replaceWith(newNode);
-            expect(root.children[0].children[0].children.length).toBe(0);
-            expect(root.children[0].children.length).toBe(1);
-            expect(root.children[0].children[0]).toBe(newNode);
-            expect(root.children.length).toBe(2);
-            expect(oldNode.parent).toBe(null);
+            const oldNode = root.children()[0].children()[0].replaceWith(newNode);
+            expect(root.children()[0].children()[0].children().length).toBe(0);
+            expect(root.children()[0].children().length).toBe(1);
+            expect(root.children()[0].children()[0]).toBe(newNode);
+            expect(root.children().length).toBe(2);
+            expect(oldNode.parent()).toBe(null);
         });
         describe("navigation", () => {
             test('index', () => {
@@ -261,9 +261,9 @@ describe('BbTreeNode', () => {
                         new BbTreeNode()),
                     new BbTreeNode());
                 expect(root.index()).toBe(undefined);
-                expect(root.children[0].index()).toBe(0);
-                expect(root.children[0].children[0].index()).toBe(0);
-                expect(root.children[1].index()).toBe(1);
+                expect(root.children()[0].index()).toBe(0);
+                expect(root.children()[0].children()[0].index()).toBe(0);
+                expect(root.children()[1].index()).toBe(1);
             });
             test('nextSameLevel', () => {
                 const a = new BbTreeNode();

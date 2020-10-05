@@ -10,14 +10,21 @@ export class BbTreeNode {
     /**
      * parent tree node
      */
-    parent: BbTreeNode | null;
+    private _parent : BbTreeNode | null;
+    parent() : BbTreeNode | null {
+        return this._parent;
+    }
+    setParent(v : BbTreeNode | null) {
+        this._parent = v;
+    }
+
 
     /**
      * children nodes
      * @readonly
      */
     private _children : BbTreeNode[];
-    public get children(): BbTreeNode[] {
+    children(): BbTreeNode[] {
         return this._children;
     }
 
@@ -26,7 +33,7 @@ export class BbTreeNode {
      * Creates an instance of BbTreeNode.
      */
     constructor(parent: BbTreeNode | null = null) {
-        this.parent = parent;
+        this._parent = parent;
         this._children = [];
         parent?.appendChild(this);
     }
@@ -48,21 +55,21 @@ export class BbTreeNode {
      * @param child the child to add
      */
     insertChildren(index: number, ...children: BbTreeNode[]): void {
-        this.children.splice(index, 0, ...children);
+        this.children().splice(index, 0, ...children);
     }
 
     /**
      * True if the element has no parent. False otherwise.
      */
     isRoot(): boolean {
-        return this.parent ? false : true;
+        return this.parent() ? false : true;
     }
 
     /**
      * True if the element has no children. false otherwise.
      */
     isLeaf(): boolean {
-        return this.children.length ? false : true;
+        return this.children().length ? false : true;
     }
 
     /**
@@ -78,8 +85,8 @@ export class BbTreeNode {
      * @return Returns itself for chaining
      */
     appendChildren(...children: BbTreeNode[]): BbTreeNode {
-        children.forEach((child) => child.parent = this );
-        this.children.push(...children);
+        children.forEach((child) => child.setParent(this) );
+        this.children().push(...children);
         return this;
     }
 
@@ -89,8 +96,8 @@ export class BbTreeNode {
      * @return Returns itself for chaining
      */
     prependChildren(...children: BbTreeNode[]): BbTreeNode {
-        children.forEach((child) => child.parent = this);
-        this.children.unshift(...children);
+        children.forEach((child) => child.setParent(this));
+        this.children().unshift(...children);
         return this;
     }
 
@@ -103,8 +110,8 @@ export class BbTreeNode {
      * @return Returns itself for chaining
      */
     prependChild(child: BbTreeNode): BbTreeNode {
-        child.parent = this;
-        this.children.unshift(child);
+        child.setParent(this);
+        this.children().unshift(child);
         return this;
     }
 
@@ -117,9 +124,9 @@ export class BbTreeNode {
      * @return Returns itself for chaining
      */
     appendChild(child: BbTreeNode): BbTreeNode {
-        child.parent = this;
+        child.setParent(this);
 
-        this.children.push(child);
+        this.children().push(child);
         return this;
     }
 
@@ -131,10 +138,12 @@ export class BbTreeNode {
      */
     drop(): BbTreeNode {
         // 1) remove this item from the parent's children
-        this.parent?.children.splice(this.parent.children.indexOf(this), 1);
+        const p = this.parent()
+        if (p)
+            p.children().splice(p.children().indexOf(this), 1);
 
         // 2) remove this item's parent
-        this.parent = null;
+        this.setParent(null);
         return this;
     }
 
@@ -147,7 +156,9 @@ export class BbTreeNode {
      */
     changeParent(newParent: BbTreeNode, index?: number): BbTreeNode {
         // 1) remove this item from the parent's children
-        this.parent?.children.splice(this.parent.children.indexOf(this), 1);
+        const p = this.parent()
+        if (p)
+            p.children().splice(p.children().indexOf(this), 1);
 
         // 2) change this item's parent
         index ? newParent.insertChildren(index, this): newParent.appendChild(this);
@@ -167,7 +178,7 @@ export class BbTreeNode {
                 beforeChildrenCallback?: (node: BbTreeNode) => void,
                 afterChildrenCallback?: (node: BbTreeNode) => void): void {
         beforeChildrenCallback?.(node);
-        node.children.forEach((child: BbTreeNode) => BbTreeNode.walk(child, afterChildrenCallback, beforeChildrenCallback));
+        node.children().forEach((child: BbTreeNode) => BbTreeNode.walk(child, afterChildrenCallback, beforeChildrenCallback));
         afterChildrenCallback?.(node);
     }
 
@@ -177,7 +188,7 @@ export class BbTreeNode {
      * Note that this function does not keep ordering.
      */
     static flatten(node: BbTreeNode): BbTreeNode[] {
-        return Array.prototype.concat.apply(node.children, node.children.map(BbTreeNode.flatten));
+        return Array.prototype.concat.apply(node.children(), node.children().map(BbTreeNode.flatten));
     }
 
     /**
@@ -197,9 +208,11 @@ export class BbTreeNode {
      * @returns itself for chaining
      */
     moveDeeper(newParent: BbTreeNode): BbTreeNode {
-        this.parent?.children.splice(this.parent.children.indexOf(this), 1, newParent);
-        newParent.children.push(this);
-        this.parent = newParent;
+        const p = this.parent()
+        if (p)
+            p.children().splice(p.children().indexOf(this), 1, newParent);
+        newParent.children().push(this);
+        this.setParent(newParent);
         return this;
     }
 
@@ -212,8 +225,10 @@ export class BbTreeNode {
      * @see {@link moveDeeper}
      */
     replaceWith(node: BbTreeNode): BbTreeNode {
-        this.parent?.children.splice(this.parent.children.indexOf(this), 1, node);
-        this.parent = null;
+        const p = this.parent()
+        if (p)
+            p.children().splice(p.children().indexOf(this), 1, node);
+        this.setParent(null);
         return this;
     }
 
@@ -225,10 +240,10 @@ export class BbTreeNode {
      * @returns the index
      */
     index(): number | undefined {
-        const p = this.parent;
+        const p = this.parent();
         if (!p)
             return undefined;
-        return p.children.indexOf(this);
+        return p.children().indexOf(this);
     }
 
     /**
@@ -238,14 +253,15 @@ export class BbTreeNode {
      *
      */
     nextSameLevel(): BbTreeNode | undefined {
-        if (!this.parent)
+        const p = this.parent()
+        if (!p)
             return undefined;
 
         const i = this.index();
         if (i == undefined)
             return undefined;
 
-        return this.parent.children[i + 1];
+        return p.children()[i + 1];
     }
 
     /**
@@ -255,14 +271,15 @@ export class BbTreeNode {
      *
      */
     prevSameLevel(): BbTreeNode | undefined {
-        if (!this.parent)
+        const p = this.parent()
+        if (!p)
             return undefined;
 
         const i = this.index();
         if (i == undefined)
             return undefined;
 
-        return this.parent.children[i - 1];
+        return p.children()[i - 1];
     }
 
 
@@ -277,18 +294,19 @@ export class BbTreeNode {
      *         Recursively.
      */
     nextUp(): BbTreeNode | undefined {
-        if (!this.parent)
+        const p = this.parent()
+        if (!p)
             return undefined;
 
         const i = this.index();
         if (i == undefined)
             return undefined;
 
-        const nextInParent = this.parent.children[i + 1];
+        const nextInParent = p.children()[i + 1];
         if (nextInParent)
             return nextInParent;
 
-        return this.parent.nextUp();
+        return p.nextUp();
     }
 
     /**
@@ -301,18 +319,19 @@ export class BbTreeNode {
      *          or the parent element, if not found.
      */
     previousUp(): BbTreeNode | undefined {
-        if (!this.parent)
+        const p = this.parent()
+        if (!p)
             return undefined;
 
         const i = this.index();
         if (i == undefined)
             return undefined;
 
-        const nextInParent = this.parent.children[i - 1];
+        const nextInParent = p.children()[i - 1];
         if (nextInParent)
             return nextInParent;
 
-        return this.parent;
+        return p;
     }
 
 
@@ -322,8 +341,8 @@ export class BbTreeNode {
      * Try not to use this function to iterate: it will be slow.
      */
     next(): BbTreeNode | undefined {
-        if (this.children.length)
-            return this.children[0];
+        if (this.children().length)
+            return this.children()[0];
 
         return this.nextUp();
     }
@@ -335,8 +354,8 @@ export class BbTreeNode {
     prev(): BbTreeNode | undefined {
         const prevSameLevel = this.prevSameLevel();
         if (prevSameLevel) {
-            const prevCount = prevSameLevel.children.length;
-            return prevCount ? prevSameLevel.children[prevCount - 1] : prevSameLevel;
+            const prevCount = prevSameLevel.children().length;
+            return prevCount ? prevSameLevel.children()[prevCount - 1] : prevSameLevel;
         }
 
         return this.previousUp();
