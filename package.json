@@ -22,6 +22,7 @@
   "author": "marr11317",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "bounding-boxes": "^3.0.2",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
