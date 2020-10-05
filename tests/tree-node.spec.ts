@@ -29,7 +29,7 @@ describe('BbTreeNode', () => {
             [1, 2],
             [2, 2],
             [3, 1],
-        ])('%s', (index: number, childCount: number) => {
+        ])('%s: count', (index: number, childCount: number) => {
             test(`index: ${index}`, () => {
                 const childArray = [];
                 for (let i = 0; i < childCount; i++) {

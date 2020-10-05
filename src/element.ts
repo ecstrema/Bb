@@ -10,10 +10,17 @@ import { BbTreeNode } from "./tree-node";
 export class BbElement extends BbTreeNode {
 
     /**
+     * The element's type. Very useful in switch case statements.
+     *
+     * @returns 'element'
+     */
+    type = 'element';
+
+    /**
      * Creates an instance of BbElement.
      * @param [parent=null]
      */
-    constructor(parent: BbTreeNode | null = null) {
+    constructor(parent: BbElement | null = null) {
         super(parent)
     }
 
@@ -21,6 +28,14 @@ export class BbElement extends BbTreeNode {
      * Bounding box relative to the parent.
      */
     bbox: BoundingBox = new BoundingBox(0, 0, 0, 0);
+
+
+    /**
+     * Overridden to prevent having to cast the result of children() to `BbElement` every time.
+     */
+    children(): BbElement[] {
+        return super.children() as BbElement[];
+    }
 
     /**
      * The sum of the parents' X offsets
@@ -32,7 +47,7 @@ export class BbElement extends BbTreeNode {
 
         while (el) {
             x += el.bbox.x1;
-            el = el.parent as BbElement;
+            el = el.parent() as BbElement;
         }
         return x;
     }
@@ -47,7 +62,7 @@ export class BbElement extends BbTreeNode {
 
         while (el) {
             y += el.bbox.y1;
-            el = el.parent as BbElement;
+            el = el.parent() as BbElement;
         }
         return y;
     }
@@ -58,12 +73,24 @@ export class BbElement extends BbTreeNode {
     absoluteBbox(): BoundingBox {
         const b = new BoundingBox(this.bbox.x1, this.bbox.y1, this.bbox.x2, this.bbox.y2);
 
-        let el = this.parent as BbElement;
+        let el = this.parent() as BbElement;
         while (el) {
             b.x += el.bbox.x;
             b.y += el.bbox.y;
-            el = el.parent as BbElement;
+            el = el.parent() as BbElement;
         }
         return b;
+    }
+
+    /**
+     * Layouts an element's children.
+     * This functions should do two things:
+     * - Loop through children to set their x and y offset properties.
+     * - set this.bbox.height and this.bbox.width.
+     */
+    layout(context: CanvasRenderingContext2D) {
+        this.children().forEach((child) => {
+            console.warn(`unhandled child of ${this.type} during layout: ${child.type}`);
+        });
     }
 }

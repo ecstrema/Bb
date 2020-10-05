@@ -14,24 +14,19 @@ const context = canvas.getContext('2d');
 document.getElementById('canvas').appendChild(canvas);
 
 
-import { BoundingBox } from "bounding-boxes";
-import { BbElement } from "../../dist/element"
+import { BbScore } from "../../dist/score"
+import { BbSystem } from "../../dist/system"
 import { BbTreeNode } from "../../dist/tree-node";
-let root =  new BbElement().appendChildren(
-                new BbElement().appendChildren(
-                    new BbElement(),
-                    new BbElement()
-                ),
-                new BbElement(),
-                new BbElement().appendChildren(
-                    new BbElement()
-                )
+let root =  new BbScore().appendChildren(
+                new BbSystem(),
+                new BbSystem(),
+                new BbSystem(),
             )
 context.save();
 context.strokeStyle = 'blue';
 context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
 context.restore();
-root.layout
+root.layout(context)
 
 BbTreeNode.walk(root, (node) => {
     const el = node
