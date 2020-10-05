@@ -1,4 +1,4 @@
-const canvas = document.createElement('canvas') as HTMLCanvasElement;
+const canvas = document.createElement('canvas');
 // A4 in pixels (96 dpi)
 canvas.width = 794;
 canvas.height = 1123;
@@ -11,7 +11,7 @@ const context = canvas.getContext('2d');
 // this.context.fillStyle = color;
 // this.context.strokeStyle = color;
 
-document.getElementById('canvas')?.appendChild(canvas);
+document.getElementById('canvas').appendChild(canvas);
 
 
 import { BoundingBox } from "bounding-boxes";
@@ -26,12 +26,15 @@ let root =  new BbElement().appendChildren(
                 new BbElement().appendChildren(
                     new BbElement()
                 )
-            ) as BbElement
-
-root.bbox = new BoundingBox(0, 0, 100, 100)
+            )
+context.save();
+context.strokeStyle = 'blue';
+context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
+context.restore();
+root.layout
 
 BbTreeNode.walk(root, (node) => {
-    const el = node as BbElement
+    const el = node
     const elBbox = el.absoluteBbox()
-    context?.strokeRect(elBbox.x, elBbox.y, elBbox.width, elBbox.height)
+    context.strokeRect(elBbox.x, elBbox.y, elBbox.width, elBbox.height)
 })
