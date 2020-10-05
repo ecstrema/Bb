@@ -42,7 +42,7 @@ describe('BbTreeNode', () => {
                     expect(parent.children[index + i]).toBe(childArray[i]);
                 }
             });
-        } );
+        });
     });
     describe('appendChildren', () => {
         const parent = new BbTreeNode();
