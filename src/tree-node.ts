@@ -66,6 +66,13 @@ export class BbTreeNode {
     }
 
     /**
+     * True if the element has no children. false otherwise.
+     */
+    isBranch(): boolean {
+        return !(this.isRoot() || this.isLeaf());
+    }
+
+    /**
      * Appends children to the {@link children} list
      * @param children The children to append
      * @return Returns itself for chaining
