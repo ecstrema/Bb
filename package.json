@@ -10,7 +10,7 @@
     "build:docs": "rimraf docs/ && compodoc --config ./.compodocrc",
     "serve:docs": "rimraf docs/ && compodoc  --config ./.compodocrc --watch --serve --port 9252",
     "coverage": "jest --coverage",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build && npm run build:docs"
   },
   "keywords": [
     "math",
