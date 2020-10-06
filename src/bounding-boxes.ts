@@ -20,6 +20,13 @@ export class BoundingBox {
         this.y2 = this.y1 + v;
         this.orderY();
     }
+    /** The shorter way to the bbox's height */
+    public get h(): number {
+        return this.height;
+    }
+    public set h(v: number) {
+        this.height = v;
+    }
 
     /** The bounding box's width */
     public get width() : number {
@@ -28,6 +35,13 @@ export class BoundingBox {
     public set width(v : number) {
         this.x2 = this.x1 + v;
         this.orderX();
+    }
+    /** The shorter way to the bbox's width */
+    public get w(): number {
+        return this.width;
+    }
+    public set w(v: number) {
+        this.width = v;
     }
 
     /** The bounding box's first corner's x */
@@ -170,6 +184,66 @@ export class BoundingBox {
 
         this._y1 = y;
         this._y2 = y + h;
+    }
+
+    /**
+     * Move the bbox to these coordinates.
+     *
+     * @param x The new x1
+     * @param y The new y1
+     */
+    moveTo(x: number, y: number): void {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Move the bbox by these coordinates.
+     *
+     * @param x The x shift amount
+     * @param y The y shift amount
+     */
+    move(x: number, y: number): void {
+        this.x += x;
+        this.y += y;
+    }
+
+    /**
+     * As the name states this function gives the smallest box enclosing
+     * a set of boxes
+     *
+     * @static
+     * @param bboxes The culprits
+     * @return {BoundingBox}
+     */
+    static sme0(bboxes: BoundingBox[]): BoundingBox {
+        const x1: number[] = []
+        const y1: number[] = []
+        const x2: number[] = []
+        const y2: number[] = []
+
+        bboxes.forEach((bbox) => {
+            x1.push(bbox.x1)
+            x2.push(bbox.x2)
+            y1.push(bbox.y1)
+            y2.push(bbox.y2)
+        })
+        return new BoundingBox(Math.max(...x1), Math.max(...y1), Math.max(...x2), Math.max(...y2))
+    }
+    static sme1(bboxes: BoundingBox[]): BoundingBox {
+        const result = new BoundingBox(0, 0, 0, 0)
+        result.x1 = Math.max(...bboxes.map((bbox) => { return bbox.x1; }))
+        result.y1 = Math.max(...bboxes.map((bbox) => { return bbox.y1; }))
+        result.x2 = Math.max(...bboxes.map((bbox) => { return bbox.x2; }))
+        result.y2 = Math.max(...bboxes.map((bbox) => { return bbox.y2; }))
+        return result;
+    }
+    static sme2(bboxes: BoundingBox[]): BoundingBox {
+        let result = new BoundingBox(0, 0, 0, 0)
+        bboxes.forEach((bbox) => {
+            result = result.union(bbox)
+        })
+        return result;
     }
 
     /**

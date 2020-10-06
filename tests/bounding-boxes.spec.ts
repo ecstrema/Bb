@@ -41,6 +41,18 @@ describe('modify properties', () => {
         expect(b.x1).toBe(-10);
         expect(b.x2).toBe(0);
     })
+    test('modify w', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        expect(b.w).toBe(100);
+        b.w = 10;
+        expect(b.w).toBe(10);
+        expect(b.x1).toBe(0);
+        expect(b.x2).toBe(10);
+        b.w = -10;
+        expect(b.w).toBe(10);
+        expect(b.x1).toBe(-10);
+        expect(b.x2).toBe(0);
+    })
     test('modify height', () => {
         let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
         expect(b.height).toBe(100);
@@ -50,6 +62,18 @@ describe('modify properties', () => {
         expect(b.y2).toBe(10);
         b.height = -10;
         expect(b.height).toBe(10);
+        expect(b.y1).toBe(-10);
+        expect(b.y2).toBe(0);
+    })
+    test('modify h', () => {
+        let b: BoundingBox = new BoundingBox(0, 0, 100, 100);
+        expect(b.h).toBe(100);
+        b.h = 10;
+        expect(b.h).toBe(10);
+        expect(b.y1).toBe(0);
+        expect(b.y2).toBe(10);
+        b.h = -10;
+        expect(b.h).toBe(10);
         expect(b.y1).toBe(-10);
         expect(b.y2).toBe(0);
     })
@@ -174,7 +198,7 @@ describe('offset', () => {
     })
 })
 
-describe('move', () => {
+describe('moveTo with properties', () => {
     describe.each([
         [0, 0, 100, 100,        50, 50,         50, 50, 150, 150],
         [-100, 0, 100, 100,     50, 50,         50, 50, 250, 150],
@@ -187,6 +211,61 @@ describe('move', () => {
             const b = new BoundingBox(x1, y1, x2, y2);
             b.x = newX;
             b.y = newY;
+            expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
+        })
+    })
+})
+describe('moveTo with function', () => {
+    describe.each([
+        [0, 0, 100, 100,        50, 50,         50, 50, 150, 150],
+        [-100, 0, 100, 100,     50, 50,         50, 50, 250, 150],
+        [-100, 0, 100, -100,    0, 0,           0, 0, 200, 100],
+
+    ])('%s', (x1, y1, x2, y2, newX, newY, x1Final, y1Final, x2Final, y2Final) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${22}, xOffset: ${newX}, yOffset: ${newY},
+          x1Final: ${x1Final}, y1Final: ${y1Final}, x2Final: ${x2Final}, y2Final: ${y2Final}`,
+          () => {
+            const b = new BoundingBox(x1, y1, x2, y2);
+            b.moveTo(newX, newY)
+            expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
+        })
+    })
+})
+describe('move', () => {
+    describe.each([
+        [0, 0, 100, 100,        50, 50,         50, 50, 150, 150],
+        [-100, 0, 100, 100,     50, 50,         -50, 50, 150, 150],
+        [-100, 0, 100, -100,    0, 0,           -100, 0, 100, -100],
+
+    ])('%s', (x1, y1, x2, y2, deltaX, deltaY, x1Final, y1Final, x2Final, y2Final) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${22}, xOffset: ${deltaX}, yOffset: ${deltaY},
+          x1Final: ${x1Final}, y1Final: ${y1Final}, x2Final: ${x2Final}, y2Final: ${y2Final}`,
+          () => {
+            const b = new BoundingBox(x1, y1, x2, y2);
+            b.move(deltaX, deltaY)
+            expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
+        })
+    })
+})
+describe('smallest box enclosing a set of box', () => {
+    describe.each([
+        [[[0, 0, 100, 100],
+          [50, 50, 200, 130],
+          [-50, 10, 22, 29]],         -50, 0, 200, 130],
+        [[[-100, 0, 100, 100, ],
+          [50, -50, 200, 130],
+          [-50, 10, 220, 290]],         -100, -50, 220, 290],
+        [[[-100, 0, 100, -100,],
+          [50, 50, 200, 130],
+          [-50, 10, 22, 29]],         -100, -100, 200, 130],
+
+    ])('%s', (bboxes, x1Final, y1Final, x2Final, y2Final) => {
+        test(`sme2`, () => {
+            const bb: BoundingBox[] = [];
+            bboxes.forEach(bbox => {
+                bb.push(new BoundingBox(bbox[0], bbox[1], bbox[2], bbox[3]))
+            });
+            const b = BoundingBox.sme2(bb)
             expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
         })
     })
