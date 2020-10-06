@@ -30,7 +30,7 @@ let root =  new BbScore().appendChildren(
                     new BbSegment(),
                     new BbSegment()
                 ),
-            )
+            );
 context.save();
 context.strokeStyle = 'blue';
 context.strokeRect(0, 0, context.canvas.width, context.canvas.height);

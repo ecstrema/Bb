@@ -11,6 +11,19 @@ export class BbSegment extends BbElement {
     type = 'segment';
 
     /**
+     * The fixed margin is in spatium,
+     * and does not the depend on the layout.
+     * It depends solely on the spatium
+     */
+    rightFixedMargin: number = 0
+
+    /**
+     * The dynamic margin is a multiplier of how the remaining space
+     * should be distributed among segments.
+     */
+    rightDynamicMargin: number = 0
+
+    /**
      * Creates an instance of BbSegment.
      * @param [parent=null]
      */
