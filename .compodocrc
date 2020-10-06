@@ -1,0 +1,7 @@
+{
+    "theme": "gitbook",
+    "tsconfig": "./src/tsconfig.compodoc-mock.json",
+    // "customFavicon": "./src/assets/icon/favicon.png",
+    // "assetsFolder": "./src/assets",
+    "output": "docs"
+}

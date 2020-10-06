@@ -7,6 +7,8 @@
     "build": "npm run clean && tsc",
     "test": "jest",
     "clean": "rimraf dist/",
+    "build:docs": "rimraf docs/ && compodoc --config ./.compodocrc",
+    "serve:docs": "rimraf docs/ && compodoc  --config ./.compodocrc --watch --serve --port 9252",
     "coverage": "jest --coverage",
     "prepublish": "npm run build"
   },
@@ -42,6 +44,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.11",
     "@types/jest": "^26.0.10",
     "jest": "^26.4.2",
     "rimraf": "^3.0.2",
