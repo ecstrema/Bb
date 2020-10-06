@@ -20,7 +20,7 @@ const config = {
 		contentBase: '.dist',
 		compress: true,
 		port: 9000,
-		hot: true,
+		// hot: true,
 	},
 
 	entry: {

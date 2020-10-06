@@ -39,20 +39,19 @@ export class BbSystem extends BbElement {
 
         const promises: Promise<void>[] = [];
         this.children().forEach(child => {
-            if (child instanceof BbSegment)
+            if (child.type == 'segment')
                 promises.push(child.layout(context));
         });
         return Promise.all(promises).then(() => {
             this.placeMeasures();
-            this.bbox = BoundingBox.smallestBoxEnclosing(
-                this.children().map((child) => { return child.bbox; } ));
+            this.encloseChildren();
         });
     }
 
     placeMeasures(): void {
         let w = 0;
         this.children().forEach((child) => {
-            if (child instanceof BbSegment) {
+            if (child.type = 'segment') {
                 child.bbox.x = w;
                 w += child.bbox.w;
             }

@@ -1,3 +1,4 @@
+import { BoundingBox } from "bounding-boxes";
 import { BbElement } from "./element";
 
 /**
@@ -38,9 +39,37 @@ export class BbSegment extends BbElement {
      * @inheritdoc
      */
     async layout(context: CanvasRenderingContext2D): Promise<void> {
-        this.bbox.height = 100;
-        this.bbox.width = 150;
+        const promises: Promise<void>[] = [];
+        this.children().forEach(child => {
+            if (child.type === 'barline') {
+                promises.push(child.layout(context))
+            }
+            else {
+                console.log(`unsupported child of ${this.type}: ${child.type} during layout`);
+            }
+        });
+
+        return Promise.all(promises).then(() => {
+            this.placeElements();
+            this.encloseChildren();
+        });
     }
 
+    placeElements(): void {
 
+    }
+}
+
+
+/**
+ * Segment types
+ *
+ * @export
+ * @enum {string}
+ */
+export enum BbSegmentType {
+    barline     = 'barline',
+    keySig      = 'key-sig',
+    timeSig     = 'time-sig',
+    chordSymbol = 'chord-symbol',
 }

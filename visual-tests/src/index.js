@@ -17,18 +17,39 @@ import { BbScore } from "../../dist/score"
 import { BbSystem } from "../../dist/system"
 import { BbSegment } from "../../dist/segment"
 import { BbTreeNode } from "../../dist/tree-node";
+import { BbBarline } from "../../dist/barline";
+
+let barline1 = new BbBarline()
+let barline2 = new BbBarline()
+let barline3 = new BbBarline()
+let barline4 = new BbBarline()
+let barline5 = new BbBarline()
+let barline6 = new BbBarline()
+
 let root =  new BbScore().appendChildren(
                 new BbSystem().appendChildren(
-                    new BbSegment(),
-                    new BbSegment(),
-                    new BbSegment()
+                    new BbSegment().appendChildren(
+                        barline1
+                    ),
+                    new BbSegment().appendChildren(
+                        barline2
+                    ),
+                    new BbSegment().appendChildren(
+                        barline3
+                    ),
                 ),
                 new BbSystem().appendChildren(
-                    new BbSegment()
+                    new BbSegment().appendChildren(
+                        barline4
+                    ),
                 ),
                 new BbSystem().appendChildren(
-                    new BbSegment(),
-                    new BbSegment()
+                    new BbSegment().appendChildren(
+                        barline5
+                    ),
+                    new BbSegment().appendChildren(
+                        barline6
+                    ),
                 ),
             );
 context.save();
@@ -37,9 +58,8 @@ context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
 context.restore();
 root.layout(context).then(() => {
     BbTreeNode.walk(root, (el) => {
-        const elBbox = el.absoluteBbox().copy()
-        context.strokeRect(elBbox.x, elBbox.y, elBbox.width, elBbox.height)
-        console.log(el.type)
-        console.log(elBbox)
+        const elBbox = el.absoluteBbox().copy();
+        context.strokeRect(elBbox.x, elBbox.y, elBbox.width, elBbox.height);
     })
 })
+console.log(BbTreeNode.treeToString(root))

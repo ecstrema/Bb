@@ -235,8 +235,13 @@ describe('BbTreeNode', () => {
         test('flatten', () => {
             const root = new BbTreeNode().appendChildren(
                             new BbTreeNode().appendChildren(
+                                new BbTreeNode().appendChildren(
+                                    new BbTreeNode()
+                                ),
                                 new BbTreeNode()),
-                            new BbTreeNode());
+                            new BbTreeNode().appendChildren(
+                                new BbTreeNode()
+                            ));
             const flattened = BbTreeNode.flatten(root);
             BbTreeNode.walk(root, (node) => {
                 expect(flattened.includes(node));

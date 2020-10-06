@@ -41,8 +41,8 @@ export class BbBarline extends BbElement {
      * @inheritdoc
      */
     async layout(context: CanvasRenderingContext2D): Promise<void> {
-        this.bbox.height = 0
-        this.bbox.width  = 0
+        this.bbox.height = 30
+        this.bbox.width  = 100
     }
 
 }
@@ -51,7 +51,7 @@ export class BbBarline extends BbElement {
  * Barline types
  *
  * @export
- * @enum {number}
+ * @enum {string}
  */
 export enum BbBarlineType {
     repeatLeft = 'repeatLeft',

@@ -120,6 +120,11 @@ export class BbElement extends BbTreeNode {
         });
     }
 
+    encloseChildren() {
+        this.bbox = BoundingBox.smallestBoxEnclosing(
+            this.children().map((child) => { return child.bbox; }));
+    }
+
     /**
      * @inheritdoc
      */

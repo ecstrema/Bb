@@ -31,11 +31,13 @@ export class BbScore extends BbElement {
         const promises: Promise<void>[] = [];
         let lastSystem: BbSystem;
         this.children().forEach(child => {
+            // Prevent the type checker from thinking that last system may not be a system
+            // if (child.type = 'system') {
             if (child instanceof BbSystem) {
                 promises.push(child.layout(context));
                 lastSystem = child;
             }
-            else if (child instanceof BbSegment) {
+            else if (child.type === 'segment') {
                 if (!lastSystem) {
                     lastSystem = new BbSystem();
                     this.prependChild(lastSystem);
@@ -57,7 +59,7 @@ export class BbScore extends BbElement {
     spaceSystems() : void {
         let h = 0;
         this.children().forEach((child) => {
-            if (child instanceof BbSystem) {
+            if (child.type == 'system') {
                 child.bbox.y = h;
                 h += child.bbox.height;
             }

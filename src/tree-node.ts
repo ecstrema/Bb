@@ -149,6 +149,84 @@ export class BbTreeNode {
     }
 
     /**
+     * Convert the tree to a string of this form:
+     *
+     * ```
+     * tree
+     *   ├branch
+     *   │ ├branch
+     *   │ │ └leaf
+     *   │ ├branch
+     *   │ │ └leaf
+     *   │ └branch
+     *   │   └leaf
+     *   ├branch
+     *   │ └branch
+     *   │   └leaf
+     *   └branch
+     *     ├branch
+     *     │ └leaf
+     *     └branch
+     *       └leaf
+     * ```
+     *
+     * The text used to display is contained in the {@link toString} property.
+     * You should override to string in your subclass for an appropriate meaning.
+     *
+     * @see {@link toString}
+     *
+     * @static
+     * @param node The node that will be root of this tree
+     * @param [level=0] The start level
+     * @param [endedLevels=[]] The levels that are ended.
+     * @param [last=true] Whether this node is the last in his parent
+     * @param [root=true] Whether this node is the root
+     * @return {string} The result string
+     */
+    static treeToString(node: BbTreeNode, level: number = 0, endedLevels: number[] = [], last = true, root = true): string {
+        let result = '';
+        for (let i = 0; i < level; i++) {
+            if (endedLevels.includes(i))
+                result += '  '
+            else
+                result += "│ "
+        }
+        if (!root){
+            if (last)
+                result += '└'
+            else
+                result += '├'
+        }
+
+        result += node.toString + "\n";
+        const len = node.children().length
+        for (let i = 0; i < len; i++) {
+            const arr = endedLevels.slice()
+            if (last)
+                arr.push(level)
+            result += BbTreeNode.treeToString(
+                node.children()[i],
+                level + 1,
+                arr,
+                (i === (len - 1)),
+                false)
+        }
+        return result;
+
+
+        // let result = ' ';
+        // for (let i = 0; i < indent; i++) {
+        //     result += '│ ';
+        // }
+        // // if (node.children().length)
+        // //     result += '┬'
+        // // else
+        // //     result += '└'
+        // result += '└' + node.toString + '\n';
+        // return result;
+    }
+
+    /**
      * Move the node and its children to a new parent.
      *
      * note: changing the root item's parent results in undefined behavior
