@@ -16,7 +16,7 @@ import { BoundingBox } from 'bounding-boxes';
 
 ### Useful functions
 
-API is also available here()
+API is also available in docs format [here](https://marr11317.github.io/bounding-boxes/)
 
 ``` typescript
 /**
