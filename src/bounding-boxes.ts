@@ -239,6 +239,53 @@ export class BoundingBox {
         return result;
     }
 
+
+    /**
+     * Return a copy of the bounding box
+     */
+    copy(): BoundingBox {
+        return new BoundingBox(this.x1, this.y1, this.x2, this.y2);
+    }
+
+    /**
+     * Add a margin around the box.
+     *
+     * ```
+     *  new__________
+     *    |  ______  |
+     *    | | old  | |
+     *    | |      | |
+     *    | |______| |
+     *    |__________| |=margin
+     * ```
+     *
+     * @param margin The spacing between the old and new box
+     */
+    addMargin(margin: number): void {
+        this._x1 -= margin;
+        this._x2 += margin;
+        this._y1 -= margin;
+        this._y2 += margin;
+        this.order()
+    }
+
+    /**
+     * Adds margins around the box.
+     * Note that this function uses screen coordinates: (0, 0) is the **top**-left corner
+     *
+     * @param left The margin to add after `x1`
+     * @param top The margin to add before `y1`
+     * @param right The margin to add before `x2`
+     * @param bottom The margin to add after `y2`
+     */
+    addMargins(left: number, top: number, right: number, bottom: number): void {
+        this._x1 -= left;
+        this._x2 += right;
+        this._y1 -= top;
+        this._y2 += bottom;
+        this.order()
+    }
+
     /**
      * Ensure that x1 is smaller than x2, and swap if needed.
      * Do the same for y1 and y2.

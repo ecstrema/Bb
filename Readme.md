@@ -62,6 +62,38 @@ export declare class BoundingBox {
     static sme(bboxes: BoundingBox[]): BoundingBox;
 
     /**
+     * Return a copy of the bounding box
+     */
+    copy(): BoundingBox;
+
+    /**
+     * Add a margin around the box.
+     *
+     * ```
+     *  new__________
+     *    |  ______  |
+     *    | | old  | |
+     *    | |      | |
+     *    | |______| |
+     *    |__________| |=margin
+     * ```
+     *
+     * @param margin The spacing between the old and new box
+     */
+    addMargin(margin: number): void;
+
+    /**
+     * Adds margins around the box.
+     * Note that this function uses screen coordinates: (0, 0) is the **top**-left corner
+     *
+     * @param left The margin to add after `x1`
+     * @param top The margin to add before `y1`
+     * @param right The margin to add before `x2`
+     * @param bottom The margin to add after `y2`
+     */
+    addMargins(left: number, top: number, right: number, bottom: number): void;
+
+    /**
      * Returns true if the point is inside the box, false otherwise.
      * @param x The point's x
      * @param y The point's y

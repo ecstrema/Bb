@@ -267,6 +267,54 @@ describe('smallest box enclosing a set of box', () => {
             });
             const b = BoundingBox.sme(bb)
             expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
-        })
-    })
-})
+        });
+    });
+});
+
+describe('copy', () => {
+    describe.each([
+        [0, 0, 100, 100],
+        [-100, 0, 100, 100],
+        [-100, -200, 100, -100],
+        [0, 0, 0, 0],
+    ])('%s', (x1, y1, x2, y2) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`,
+          () => {
+            const b = new BoundingBox(x1, y1, x2, y2);
+            expect(b.copy()).toStrictEqual(new BoundingBox(x1, y1, x2, y2));
+            expect(b.copy()).toStrictEqual(b);
+        });
+    });
+});
+
+describe('addMargin', () => {
+    describe.each([
+        [0, 0, 100, 100         , -10, -10, 110, 110],
+        [-100, 0, 100, 100      , -110, -10, 110, 110],
+        [-100, -200, 100, -100  , -110, -210, 110, -90],
+        [0, 0, 0, 0             , -10, -10, 10, 10],
+    ])('%s', (x1, y1, x2, y2, resultX1, resultY1, resultX2, resultY2) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`,
+            () => {
+                const b = new BoundingBox(x1, y1, x2, y2);
+                b.addMargin(10)
+                expect(b).toStrictEqual(new BoundingBox(resultX1, resultY1, resultX2, resultY2));
+            });
+    });
+});
+
+describe('addMargins', () => {
+    describe.each([
+        [0, 0, 100, 100        , 0, 0, 10, 10          , 0, 0, 110, 110],
+        [-100, 0, 100, 100     , -10, -10, -100, 100   , -90, 10, 0, 200],
+        [-100, -200, 100, -100 , -100, -200, 100, -100 , 0, -200, 200, 0],
+        [0, 0, 0, 0            , -10, 10, -10, 50      , -10, -10, 10, 50],
+    ])('%s', (x1, y1, x2, y2, left, top, right, bottom, resultX1, resultY1, resultX2, resultY2) => {
+        test(`x1: ${x1}, y1: ${y1}, x2: ${x2}, y2: ${y2}`,
+            () => {
+                const b = new BoundingBox(x1, y1, x2, y2);
+                b.addMargins(left, top, right, bottom);
+                expect(b).toStrictEqual(new BoundingBox(resultX1, resultY1, resultX2, resultY2));
+            });
+    });
+});
