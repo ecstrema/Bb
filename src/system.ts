@@ -24,7 +24,8 @@ export class BbSystem extends BbElement {
         super(parent);
     }
 
-    /* Layout the System.
+    /**
+     * Layout the System.
      *
      * 1) Layout measures to minimum width
      * 2) Layout measures to fill
@@ -43,7 +44,7 @@ export class BbSystem extends BbElement {
         });
         return Promise.all(promises).then(() => {
             this.placeMeasures();
-            BoundingBox.smallestBoxEnclosing(
+            this.bbox = BoundingBox.smallestBoxEnclosing(
                 this.children().map((child) => { return child.bbox; } ));
         });
     }
@@ -51,8 +52,10 @@ export class BbSystem extends BbElement {
     placeMeasures(): void {
         let w = 0;
         this.children().forEach((child) => {
-            child.bbox.x = w;
-            w += child.bbox.w;
+            if (child instanceof BbMeasure) {
+                child.bbox.x = w;
+                w += child.bbox.w;
+            }
         });
     }
 }
