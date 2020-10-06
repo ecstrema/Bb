@@ -210,35 +210,28 @@ export class BoundingBox {
 
     /**
      * As the name states this function gives the smallest box enclosing
-     * a set of boxes
+     * a set of boxes (`bboxes`)
+     *
+     * @see sme
      *
      * @static
      * @param bboxes The culprits
      * @return {BoundingBox}
      */
-    static sme0(bboxes: BoundingBox[]): BoundingBox {
-        const x1: number[] = []
-        const y1: number[] = []
-        const x2: number[] = []
-        const y2: number[] = []
+    static smallestBoxEnclosing(bboxes: BoundingBox[]): BoundingBox {
+        return this.sme(bboxes);
+    }
 
-        bboxes.forEach((bbox) => {
-            x1.push(bbox.x1)
-            x2.push(bbox.x2)
-            y1.push(bbox.y1)
-            y2.push(bbox.y2)
-        })
-        return new BoundingBox(Math.max(...x1), Math.max(...y1), Math.max(...x2), Math.max(...y2))
-    }
-    static sme1(bboxes: BoundingBox[]): BoundingBox {
-        const result = new BoundingBox(0, 0, 0, 0)
-        result.x1 = Math.max(...bboxes.map((bbox) => { return bbox.x1; }))
-        result.y1 = Math.max(...bboxes.map((bbox) => { return bbox.y1; }))
-        result.x2 = Math.max(...bboxes.map((bbox) => { return bbox.x2; }))
-        result.y2 = Math.max(...bboxes.map((bbox) => { return bbox.y2; }))
-        return result;
-    }
-    static sme2(bboxes: BoundingBox[]): BoundingBox {
+    /**
+     * Smallest Box Enclosing `bboxes`
+     *
+     * @see smallestBoxEnclosing
+     *
+     * @static
+     * @param bboxes The culprits
+     * @return {BoundingBox}
+     */
+    static sme(bboxes: BoundingBox[]): BoundingBox {
         let result = new BoundingBox(0, 0, 0, 0)
         bboxes.forEach((bbox) => {
             result = result.union(bbox)

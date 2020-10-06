@@ -260,12 +260,12 @@ describe('smallest box enclosing a set of box', () => {
           [-50, 10, 22, 29]],         -100, -100, 200, 130],
 
     ])('%s', (bboxes, x1Final, y1Final, x2Final, y2Final) => {
-        test(`sme2`, () => {
+        test(`sme`, () => {
             const bb: BoundingBox[] = [];
             bboxes.forEach(bbox => {
                 bb.push(new BoundingBox(bbox[0], bbox[1], bbox[2], bbox[3]))
             });
-            const b = BoundingBox.sme2(bb)
+            const b = BoundingBox.sme(bb)
             expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
         })
     })
