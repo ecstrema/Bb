@@ -212,18 +212,6 @@ export class BbTreeNode {
                 false)
         }
         return result;
-
-
-        // let result = ' ';
-        // for (let i = 0; i < indent; i++) {
-        //     result += '│ ';
-        // }
-        // // if (node.children().length)
-        // //     result += '┬'
-        // // else
-        // //     result += '└'
-        // result += '└' + node.toString + '\n';
-        // return result;
     }
 
     /**
@@ -522,3 +510,5 @@ export class BbTreeNode {
         return this.previousUp();
     }
 }
+
+export type TN = BbTreeNode
