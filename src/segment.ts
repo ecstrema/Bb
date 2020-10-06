@@ -4,14 +4,14 @@ import { BbElement } from "./element";
  * Measure Element.
  * Contains Chord symbols and some other indications.
  */
-export class BbMeasure extends BbElement {
+export class BbSegment extends BbElement {
     /**
      * @inheritdoc
      */
-    type = 'measure';
+    type = 'segment';
 
     /**
-     * Creates an instance of BbMeasure.
+     * Creates an instance of BbSegment.
      * @param [parent=null]
      */
     constructor(parent: BbElement | null = null) {
@@ -19,7 +19,7 @@ export class BbMeasure extends BbElement {
     }
 
     /**
-     * Layout the Measure.
+     * Layout the Segment.
      *
      * @param context The rendering context.
      * @inheritdoc

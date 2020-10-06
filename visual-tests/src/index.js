@@ -15,20 +15,20 @@ document.getElementById('canvas').appendChild(canvas);
 
 import { BbScore } from "../../dist/score"
 import { BbSystem } from "../../dist/system"
-import { BbMeasure } from "../../dist/measure"
+import { BbSegment } from "../../dist/segment"
 import { BbTreeNode } from "../../dist/tree-node";
 let root =  new BbScore().appendChildren(
                 new BbSystem().appendChildren(
-                    new BbMeasure(),
-                    new BbMeasure(),
-                    new BbMeasure()
+                    new BbSegment(),
+                    new BbSegment(),
+                    new BbSegment()
                 ),
                 new BbSystem().appendChildren(
-                    new BbMeasure()
+                    new BbSegment()
                 ),
                 new BbSystem().appendChildren(
-                    new BbMeasure(),
-                    new BbMeasure()
+                    new BbSegment(),
+                    new BbSegment()
                 ),
             )
 context.save();

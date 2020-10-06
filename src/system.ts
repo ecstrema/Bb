@@ -1,6 +1,6 @@
 import { BoundingBox } from 'bounding-boxes';
 import { BbElement } from './element';
-import { BbMeasure } from './measure';
+import { BbSegment } from './segment';
 
 /**
  * System element.
@@ -39,7 +39,7 @@ export class BbSystem extends BbElement {
 
         const promises: Promise<void>[] = [];
         this.children().forEach(child => {
-            if (child instanceof BbMeasure)
+            if (child instanceof BbSegment)
                 promises.push(child.layout(context));
         });
         return Promise.all(promises).then(() => {
@@ -52,7 +52,7 @@ export class BbSystem extends BbElement {
     placeMeasures(): void {
         let w = 0;
         this.children().forEach((child) => {
-            if (child instanceof BbMeasure) {
+            if (child instanceof BbSegment) {
                 child.bbox.x = w;
                 w += child.bbox.w;
             }

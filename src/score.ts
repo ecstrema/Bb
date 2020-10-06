@@ -1,5 +1,5 @@
 import { BbElement } from "./element";
-import { BbMeasure } from "./measure";
+import { BbSegment } from "./segment";
 import { BbSystem } from "./system";
 
 /**
@@ -35,7 +35,7 @@ export class BbScore extends BbElement {
                 promises.push(child.layout(context));
                 lastSystem = child;
             }
-            else if (child instanceof BbMeasure) {
+            else if (child instanceof BbSegment) {
                 if (!lastSystem) {
                     lastSystem = new BbSystem();
                     this.prependChild(lastSystem);
