@@ -1,6 +1,6 @@
-import { BbScore } from "../src/score";
-import { BbSystem } from "../src/system";
-import { BbElement } from "../src/element";
+import { BbScore } from "./score";
+import { BbSystem } from "./system";
+import { BbElement } from "./element";
 
 let a: BbScore;
 let aa: BbSystem;

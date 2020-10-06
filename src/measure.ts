@@ -1,4 +1,4 @@
-import { BbElement } from "../src/element";
+import { BbElement } from "./element";
 
 /**
  * Measure Element.

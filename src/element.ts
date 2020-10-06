@@ -113,6 +113,7 @@ export class BbElement extends BbTreeNode {
      * - Loop through children to set their x and y offset properties.
      * - set this.bbox.height and this.bbox.width.
      */
+    // eslint-disable-next-line no-unused-vars
     async layout(_context: CanvasRenderingContext2D): Promise<void> {
         this.children().forEach((child) => {
             console.warn(`unhandled child of ${this.type} during layout: ${child.type}`);
