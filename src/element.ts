@@ -18,10 +18,10 @@ export class BbElement extends BbTreeNode {
 
     /**
      * Creates an instance of BbElement.
-     * @param [par=null]
+     * @param [parent=null]
      */
-    constructor(par: BbElement | null = null) {
-        super(par)
+    constructor(parent: BbElement | null = null) {
+        super(parent)
     }
 
     /**

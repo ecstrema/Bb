@@ -26,10 +26,9 @@ context.save();
 context.strokeStyle = 'blue';
 context.strokeRect(0, 0, context.canvas.width, context.canvas.height);
 context.restore();
-root.layout(context)
-
-BbTreeNode.walk(root, (node) => {
-    const el = node
-    const elBbox = el.absoluteBbox()
-    context.strokeRect(elBbox.x, elBbox.y, elBbox.width, elBbox.height)
+root.layout(context).then(() => {
+    BbTreeNode.walk(root, (el) => {
+        const elBbox = el.absoluteBbox()
+        context.strokeRect(elBbox.x, elBbox.y, elBbox.width, elBbox.height)
+    })
 })

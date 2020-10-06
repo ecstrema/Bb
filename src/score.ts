@@ -14,10 +14,10 @@ export class BbScore extends BbElement {
 
     /**
      * Creates an instance of BbSystem.
-     * @param [par=null] the parent element
+     * @param [parent=null] the parent element
      */
-    constructor(par: BbElement | null = null) {
-        super(par)
+    constructor(parent: BbElement | null = null) {
+        super(parent)
     }
 
     /**
@@ -32,7 +32,22 @@ export class BbScore extends BbElement {
             if (child instanceof BbSystem)
                 promises.push(child.layout(context))
         });
-        Promise.all(promises);
+        return Promise.all(promises).then(() => {
+            this.spaceSystems();
+        })
+    }
+
+    /**
+     * The function is called after each system has been layout on his own to space the systems.
+     */
+    spaceSystems() : void {
+        let h = 0;
+        this.children().forEach((child) => {
+            if (child instanceof BbSystem) {
+                child.bbox.y = h;
+                h += child.bbox.height;
+            }
+        })
     }
 
 }

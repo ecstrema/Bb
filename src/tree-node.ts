@@ -33,10 +33,10 @@ export class BbTreeNode {
      * Creates an instance of BbTreeNode.
      * @param [parent=null] the parent element
      */
-    constructor(par: BbTreeNode | null = null) {
-        this._parent = par;
+    constructor(parent: BbTreeNode | null = null) {
+        this._parent = parent;
         this._children = [];
-        par?.appendChild(this);
+        parent?.appendChild(this);
     }
 
     /**

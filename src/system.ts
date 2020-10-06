@@ -16,10 +16,10 @@ export class BbSystem extends BbElement {
 
     /**
      * Creates an instance of BbSystem.
-     * @param [par=null] the parent element
+     * @param [parent=null] the parent element
      */
-    constructor(par: BbElement | null = null) {
-        super(par)
+    constructor(parent: BbElement | null = null) {
+        super(parent)
     }
 
     /**
@@ -27,6 +27,6 @@ export class BbSystem extends BbElement {
      */
     async layout(context: CanvasRenderingContext2D): Promise<void> {
         this.bbox.height = 100;
-        this.bbox.width = 100;
+        this.bbox.width = context.canvas.width;
     }
 }
