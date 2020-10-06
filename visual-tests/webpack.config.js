@@ -17,9 +17,10 @@ const config = {
 	devtool: 'source-map',
 
 	devServer: {
-		contentBase: path.join(__dirname, 'dist'),
+		contentBase: '.dist',
 		compress: true,
-		port: 9000
+		port: 9000,
+		hot: true,
 	},
 
 	entry: {
@@ -29,6 +30,7 @@ const config = {
 	output: {
 		filename: '[name].js',
 		path: buildDir,
+		publicPath: '/',
 	},
 
 	optimization: {
@@ -40,7 +42,7 @@ const config = {
 	},
 
 	plugins: [
-		new CleanWebpackPlugin(),
+		new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
 		new HtmlWebpackPlugin({
 			title: 'Bouncing-Score',
 			template:'assets/index.html',
