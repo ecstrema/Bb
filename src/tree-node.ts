@@ -168,7 +168,32 @@ export class BbTreeNode {
 
     /**
      * Similar to the Array's forEach function, this one iterates through
-     *    the children and applies a callback to them
+     *    the children and applies a callback to them.
+     *
+     * For breadth-first traversal, use {@link traverse}
+     *
+     * If the order does not matter, walk is probably faster.
+     *
+     * ```
+     *       tree
+     *       ----
+     *        j         <-- level 0
+     *      /   \
+     *     f      k     <-- level 1
+     *   /   \      \
+     *  a     h      z  <-- level 2
+     *   \
+     *    d             <-- level 3
+     * ```
+     *
+     * Calling walk with only a beforeChildrenCallback
+     * is equivalent to a **depth-first** tree traversal.
+     * It will give this order of children: `j, f, a, d, h, k, z`.
+     * Also called *preorder traversal*.
+     *
+     * Calling it with only afterChildrenCallback
+     * is the opposite of depth-first: it starts from the leaves.
+     * It will give this order: `z, k, h, d, a, f, j`.
      *
      * @param node The node from which to start iterating.
      *    The callback will be called on this node and its children
@@ -182,7 +207,7 @@ export class BbTreeNode {
                 afterChildrenCallback?: (node: BbTreeNode) => void): void {
         beforeChildrenCallback?.(node);
         node.children().forEach((child: BbTreeNode) => {
-            BbTreeNode.walk(child, afterChildrenCallback, beforeChildrenCallback);
+            BbTreeNode.walk(child, beforeChildrenCallback, afterChildrenCallback);
         });
         afterChildrenCallback?.(node);
     }
@@ -191,10 +216,62 @@ export class BbTreeNode {
      * Transform the tree deeper than node into an array.
      *
      * Note that this function does not keep ordering.
+     *
+     * Useful for *breadth-first* traversal:
+     *
+     * ```
+     *       tree
+     *       ----
+     *        j         <-- level 0
+     *      /   \
+     *     f      k     <-- level 1
+     *   /   \      \
+     *  a     h      z  <-- level 2
+     *   \
+     *    d             <-- level 3
+     * ```
+     *
+     * ```
+     * console.log(BbTreeNode.flatten(j))
+     * // [j, fk, a, h, z, d]
+     * ```
+     *
+     * {@see breadthFirst}
+     *
+     * If the order does not matter, walk is probably faster.
+     *
      */
     static flatten(node: BbTreeNode): BbTreeNode[] {
         return Array.prototype.concat.apply(node.children(),
                                             node.children().map(BbTreeNode.flatten));
+    }
+
+    /**
+     * Breadth-first tree traversal algorithm: goes level by level.
+     *
+     * For depth-first traversal, use {@link walk}
+     *
+     * ```
+     *       tree
+     *       ----
+     *        j         <-- level 0
+     *      /   \
+     *     f      k     <-- level 1
+     *   /   \      \
+     *  a     h      z  <-- level 2
+     *   \
+     *    d             <-- level 3
+     * ```
+     *
+     * ```
+     * j.traverse((node: BbTreeNode) => console.log(node))
+     * // j, fk, a, h, z, d
+     * ```
+     *
+     * @param callback the callback to apply
+     */
+    traverse(callback: (node: BbTreeNode) => void) {
+        BbTreeNode.flatten(this).forEach((node) => callback(node) )
     }
 
     /**
