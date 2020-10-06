@@ -15,7 +15,19 @@ export class BbMeasure extends BbElement {
      * @param [parent=null]
      */
     constructor(parent: BbElement | null = null) {
-        super(parent)
+        super(parent);
     }
+
+    /**
+     * Layout the Measure.
+     *
+     * @param context The rendering context.
+     * @inheritdoc
+     */
+    async layout(context: CanvasRenderingContext2D): Promise<void> {
+        this.bbox.height = 100;
+        this.bbox.width = 150;
+    }
+
 
 }

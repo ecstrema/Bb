@@ -1,4 +1,5 @@
 import { BbElement } from "./element";
+import { BbMeasure } from "./measure";
 import { BbSystem } from "./system";
 
 /**
@@ -17,7 +18,7 @@ export class BbScore extends BbElement {
      * @param [parent=null] the parent element
      */
     constructor(parent: BbElement | null = null) {
-        super(parent)
+        super(parent);
     }
 
     /**
@@ -27,14 +28,27 @@ export class BbScore extends BbElement {
         this.bbox.height = context.canvas.height;
         this.bbox.width = context.canvas.width;
 
-        const promises: Promise<void>[] = []
+        const promises: Promise<void>[] = [];
+        let lastSystem: BbSystem;
         this.children().forEach(child => {
-            if (child instanceof BbSystem)
-                promises.push(child.layout(context))
+            if (child instanceof BbSystem) {
+                promises.push(child.layout(context));
+                lastSystem = child;
+            }
+            else if (child instanceof BbMeasure) {
+                if (!lastSystem) {
+                    lastSystem = new BbSystem();
+                    this.prependChild(lastSystem);
+                }
+                lastSystem.appendChild(child);
+            }
+            else {
+                console.log(`unsupported child of ${this.type}: ${child.type} during layout`);
+            }
         });
         return Promise.all(promises).then(() => {
             this.spaceSystems();
-        })
+        });
     }
 
     /**
@@ -47,7 +61,7 @@ export class BbScore extends BbElement {
                 child.bbox.y = h;
                 h += child.bbox.height;
             }
-        })
+        });
     }
 
 }

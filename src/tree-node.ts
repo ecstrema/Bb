@@ -14,7 +14,7 @@ export class BbTreeNode {
     parent() : BbTreeNode | null {
         return this._parent;
     }
-    setParent(v : BbTreeNode | null) {
+    setParent(v : BbTreeNode | null): void {
         this._parent = v;
     }
 
@@ -139,7 +139,7 @@ export class BbTreeNode {
      */
     drop(): BbTreeNode {
         // 1) remove this item from the parent's children
-        const p = this.parent()
+        const p = this.parent();
         if (p)
             p.children().splice(p.children().indexOf(this), 1);
 
@@ -157,7 +157,7 @@ export class BbTreeNode {
      */
     changeParent(newParent: BbTreeNode, index?: number): BbTreeNode {
         // 1) remove this item from the parent's children
-        const p = this.parent()
+        const p = this.parent();
         if (p)
             p.children().splice(p.children().indexOf(this), 1);
 
@@ -172,14 +172,18 @@ export class BbTreeNode {
      *
      * @param node The node from which to start iterating.
      *    The callback will be called on this node and its children
-     * @param afterChildrenCallback The callback to apply to every node after applying it to its children
-     * @param beforeChildrenCallback The callback to apply to every node before applying it to its children
+     * @param afterChildrenCallback The callback to apply to every node
+     *                                  **after** applying it to its children
+     * @param beforeChildrenCallback The callback to apply to every node
+     *                                  **before** applying it to its children
      */
     static walk(node: BbTreeNode,
                 beforeChildrenCallback?: (node: BbTreeNode) => void,
                 afterChildrenCallback?: (node: BbTreeNode) => void): void {
         beforeChildrenCallback?.(node);
-        node.children().forEach((child: BbTreeNode) => BbTreeNode.walk(child, afterChildrenCallback, beforeChildrenCallback));
+        node.children().forEach((child: BbTreeNode) => {
+            BbTreeNode.walk(child, afterChildrenCallback, beforeChildrenCallback);
+        });
         afterChildrenCallback?.(node);
     }
 
@@ -189,7 +193,8 @@ export class BbTreeNode {
      * Note that this function does not keep ordering.
      */
     static flatten(node: BbTreeNode): BbTreeNode[] {
-        return Array.prototype.concat.apply(node.children(), node.children().map(BbTreeNode.flatten));
+        return Array.prototype.concat.apply(node.children(),
+                                            node.children().map(BbTreeNode.flatten));
     }
 
     /**
@@ -209,7 +214,7 @@ export class BbTreeNode {
      * @returns itself for chaining
      */
     moveDeeper(newParent: BbTreeNode): BbTreeNode {
-        const p = this.parent()
+        const p = this.parent();
         if (p)
             p.children().splice(p.children().indexOf(this), 1, newParent);
         newParent.children().push(this);
@@ -226,7 +231,7 @@ export class BbTreeNode {
      * @see {@link moveDeeper}
      */
     replaceWith(node: BbTreeNode): BbTreeNode {
-        const p = this.parent()
+        const p = this.parent();
         if (p)
             p.children().splice(p.children().indexOf(this), 1, node);
         this.setParent(null);
@@ -254,7 +259,7 @@ export class BbTreeNode {
      *
      */
     nextSameLevel(): BbTreeNode | undefined {
-        const p = this.parent()
+        const p = this.parent();
         if (!p)
             return undefined;
 
@@ -272,7 +277,7 @@ export class BbTreeNode {
      *
      */
     prevSameLevel(): BbTreeNode | undefined {
-        const p = this.parent()
+        const p = this.parent();
         if (!p)
             return undefined;
 
@@ -295,7 +300,7 @@ export class BbTreeNode {
      *         Recursively.
      */
     nextUp(): BbTreeNode | undefined {
-        const p = this.parent()
+        const p = this.parent();
         if (!p)
             return undefined;
 
@@ -320,7 +325,7 @@ export class BbTreeNode {
      *          or the parent element, if not found.
      */
     previousUp(): BbTreeNode | undefined {
-        const p = this.parent()
+        const p = this.parent();
         if (!p)
             return undefined;
 

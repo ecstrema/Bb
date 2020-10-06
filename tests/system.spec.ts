@@ -19,10 +19,10 @@ describe('system', () => {
         ab = new BbSystem(a);
         aba = new BbElement(ab);
         ac = new BbSystem(a);
-    })
+    });
     test('type', () => {
-        expect(aa.type).toBe('system')
-        expect(ab.type).toBe('system')
-        expect(ac.type).toBe('system')
-    })
-})
+        expect(aa.type).toBe('system');
+        expect(ab.type).toBe('system');
+        expect(ac.type).toBe('system');
+    });
+});

@@ -21,13 +21,26 @@ export class BbElement extends BbTreeNode {
      * @param [parent=null]
      */
     constructor(parent: BbElement | null = null) {
-        super(parent)
+        super(parent);
     }
 
     /**
      * Bounding box relative to the parent.
      */
     bbox: BoundingBox = new BoundingBox(0, 0, 0, 0);
+
+
+    /**
+     * Compute the element's bounding box by union-ing its children
+     *
+     */
+    computeBbox(): void {
+        const bbox = new BoundingBox(0, 0, 0, 0);
+        this.children().forEach(child => {
+            bbox.union(child.bbox);
+        });
+        // bbox.x +=
+    }
 
 
     /**
@@ -44,7 +57,7 @@ export class BbElement extends BbTreeNode {
     public parent() : BbElement {
         return super.parent() as BbElement;
     }
-    public setParent(v : BbElement) {
+    public setParent(v : BbElement): void {
         super.setParent(v);
     }
 
@@ -100,7 +113,7 @@ export class BbElement extends BbTreeNode {
      * - Loop through children to set their x and y offset properties.
      * - set this.bbox.height and this.bbox.width.
      */
-    async layout(context: CanvasRenderingContext2D): Promise<void> {
+    async layout(_context: CanvasRenderingContext2D): Promise<void> {
         this.children().forEach((child) => {
             console.warn(`unhandled child of ${this.type} during layout: ${child.type}`);
         });

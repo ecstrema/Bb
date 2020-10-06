@@ -10,7 +10,7 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-        "no-console": "error", // 2 means error
+        // "no-console": "error",
         "semi": "error",
         "default-case": "error",
         "default-case-last": "error",
@@ -20,13 +20,17 @@
         "no-proto": "error",
         "no-self-compare": "error",
         "block-spacing": "error",
-        "max-len": ["error", { "code": 140, "tabWidth": 4 }],
+        "max-len": ["error", { "code": 100, "tabWidth": 4 }],
         "max-depth": ["error", { "max": 6 }],
         // "max-lines-per-function": ["error", {"max": 50, "skipBlankLines": true, "skipComments": true}],
          //"max-statements": ["error", {"max": 100}],
         "max-statements-per-line": ["error", {"max": 4}],
         "no-duplicate-imports": "error",
         "prefer-arrow-callback": "error",
-        "prefer-const": "error"
+        "prefer-const": "error",
+        "@typescript-eslint/no-this-alias": "off",
+        "@typescript-eslint/no-unused-vars": ["error", {
+                "varsIgnorePattern": "_*"
+            }]
     }
 }

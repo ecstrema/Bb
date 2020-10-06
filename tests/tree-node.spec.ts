@@ -179,7 +179,11 @@ describe('BbTreeNode', () => {
                 Before.walk(root, (node) => {
                     (node as Before).before = true;
                 });
-                const flattened = [root, root.children()[0], root.children()[1], root.children()[0].children()[0]] as Before[];
+                const flattened = [root,
+                                    root.children()[0],
+                                    root.children()[0].children()[0],
+                                    root.children()[1],
+                                    ] as Before[];
                 flattened.forEach((child: Before) => {
                     expect(child.before).toBe(true);
                 });
@@ -195,7 +199,11 @@ describe('BbTreeNode', () => {
                 After.walk(root, (node) => {
                     (node as After).after = true;
                 });
-                const flattened = [root, root.children()[0], root.children()[1], root.children()[0].children()[0]] as After[];
+                const flattened = [root,
+                                    root.children()[0],
+                                    root.children()[0].children()[0],
+                                    root.children()[1],
+                                    ] as After[];
                 flattened.forEach((child: After) => {
                     expect(child.after).toBe(true);
                 });
@@ -213,7 +221,11 @@ describe('BbTreeNode', () => {
                     (node as Both).before = true;
                     (node as Both).after = true;
                 });
-                const flattened = [root, root.children()[0], root.children()[1], root.children()[0].children()[0]] as Both[];
+                const flattened = [root,
+                                    root.children()[0],
+                                    root.children()[0].children()[0],
+                                    root.children()[1],
+                                    ] as Both[];
                 flattened.forEach((child: Both) => {
                     expect(child.before).toBe(true);
                     expect(child.after).toBe(true);
