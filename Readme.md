@@ -1,8 +1,8 @@
-# tree-structure
+# Bb-tree-model
 
 Fully featured tree structure without superfluous needs.
 
-- [tree-structure](#tree-structure)
+- [Bb-tree-model](#bb-tree-model)
   - [Very important part](#very-important-part)
   - [Install](#install)
   - [Usage](#usage)
