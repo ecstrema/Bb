@@ -1,6 +1,6 @@
 {
   "name": "bb-tree-model",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "Minimal (no dependencies) tree-model, contained in a single class: TreeNode aka TN",
   "main": "dist/tree-node.js",
   "scripts": {
