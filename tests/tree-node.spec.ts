@@ -176,7 +176,7 @@ describe('TreeNode', () => {
                     new Before().appendChildren(
                         new Before()),
                     new Before());
-                Before.walk(root, (node) => {
+                Before.walkStatic(root, (node) => {
                     (node as Before).before = true;
                 });
                 const flattened = [root,
@@ -196,7 +196,7 @@ describe('TreeNode', () => {
                     new After().appendChildren(
                         new After()),
                     new After());
-                After.walk(root, (node) => {
+                After.walkStatic(root, (node) => {
                     (node as After).after = true;
                 });
                 const flattened = [root,
@@ -217,7 +217,7 @@ describe('TreeNode', () => {
                     new Both().appendChildren(
                         new Both()),
                     new Both());
-                Both.walk(root, (node) => {
+                Both.walkStatic(root, (node) => {
                     (node as Both).before = true;
                     (node as Both).after = true;
                 });
@@ -243,7 +243,7 @@ describe('TreeNode', () => {
                                 new TreeNode()
                             ));
             const flattened = TreeNode.flatten(root);
-            TreeNode.walk(root, (node) => {
+            TreeNode.walkStatic(root, (node) => {
                 expect(flattened.includes(node));
             });
         });

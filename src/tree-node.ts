@@ -340,6 +340,25 @@ export class TreeNode {
     }
 
     /**
+     * The static version of [[walk]]
+     *
+     * @param node The node from which to start iterating.
+     *    The callback will be called on this node and its children.
+     * @param afterChildrenCallback The callback to apply to every node
+     *                                  **after** applying it to its children.
+     * @param beforeChildrenCallback The callback to apply to every node
+     *                                  **before** applying it to its children.
+     */
+    static walkStatic(node: TreeNode,
+                beforeChildrenCallback?: (node: TreeNode) => void,
+                afterChildrenCallback?: (node: TreeNode) => void): void {
+        beforeChildrenCallback?.(node);
+        node.children().forEach((child: TreeNode) => {
+            TreeNode.walkStatic(child, beforeChildrenCallback, afterChildrenCallback);
+        });
+        afterChildrenCallback?.(node);
+    }
+    /**
      * Similar to the Array's `forEach` function, this one iterates through
      *    the children and applies a callback to them.
      *
@@ -369,21 +388,14 @@ export class TreeNode {
      * is the opposite of *depth-first*: it starts from the leaves.
      * It will give this order: `z, k, h, d, a, f, j`.
      *
-     * @param node The node from which to start iterating.
-     *    The callback will be called on this node and its children.
      * @param afterChildrenCallback The callback to apply to every node
      *                                  **after** applying it to its children.
      * @param beforeChildrenCallback The callback to apply to every node
      *                                  **before** applying it to its children.
      */
-    static walk(node: TreeNode,
-                beforeChildrenCallback?: (node: TreeNode) => void,
-                afterChildrenCallback?: (node: TreeNode) => void): void {
-        beforeChildrenCallback?.(node);
-        node.children().forEach((child: TreeNode) => {
-            TreeNode.walk(child, beforeChildrenCallback, afterChildrenCallback);
-        });
-        afterChildrenCallback?.(node);
+    walk(beforeChildrenCallback?: (node: TreeNode) => void,
+         afterChildrenCallback?: (node: TreeNode) => void): void {
+        TreeNode.walkStatic(this, beforeChildrenCallback, afterChildrenCallback);
     }
 
     /**
@@ -440,13 +452,24 @@ export class TreeNode {
      *
      * ```typescript
      * j.traverse((node: TreeNode) => console.log(node))
-     * // j, fk, a, h, z, d
+     * // j, f, k, a, h, z, d
      * ```
      *
      * @param callback The callback to apply.
      */
+
     traverse(callback: (node: TreeNode) => void) {
-        TreeNode.flatten(this).forEach((node) => callback(node) )
+        callback(this);
+        this.traverseChildren(callback);
+    }
+
+    /**
+     * Like traverse, except that it excludes the root (`this`) component.
+     *
+     * @param callback The callback to apply.
+     */
+    traverseChildren(callback: (node: TreeNode) => void) {
+        TreeNode.flatten(this).forEach((node) => callback(node));
     }
 
     /**
