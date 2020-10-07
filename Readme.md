@@ -2,6 +2,16 @@
 
 Fully featured tree structure without superfluous needs.
 
+- [tree-structure](#tree-structure)
+  - [Very important part](#very-important-part)
+  - [Install](#install)
+  - [Usage](#usage)
+    - [import](#import)
+    - [Docs](#docs)
+    - [Getting started](#getting-started)
+    - [Next steps](#next-steps)
+  - [License](#license)
+
 ## Very important part
 
 The "bb" in bb-tree-model is pronounced "B flat", like in music.
