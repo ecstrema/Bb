@@ -1,6 +1,7 @@
 import { BbRenderer } from "../../dist/bb-renderer";
 
 const singleCanvas = document.getElementById("singleCanvas") as HTMLCanvasElement
+const input = document.getElementById('input')
 if (singleCanvas) {
     const singleCtx = singleCanvas.getContext('2d') as CanvasRenderingContext2D
 
@@ -8,5 +9,5 @@ if (singleCanvas) {
     formatter.fillChordSymbol(singleCtx, "F7(#5)")
 }
 else {
-    throw new Error("No element with id 'singleCanvas' found.");
+    throw new Error("Some element had un matching ids found.");
 }

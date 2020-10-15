@@ -4,7 +4,7 @@
   "description": "chord-symbol demo site",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack"
+    "build": "rimraf ./dist && npx webpack"
   },
   "author": "",
   "license": "MIT",
@@ -15,16 +15,11 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.2",
-    "html-webpack-plugin": "^4.3.0",
-    "terser-webpack-plugin": "^3.0.6",
+    "rimraf": "^3.0.2",
+    "ts-loader": "^8.0.5",
+    "typescript": "^4.0.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {
-    "chord-symbol": "^0.5.1",
-    "core-js": "^3.6.5",
-    "custom-piano-keys": "0.0.14",
-    "ts-loader": "^8.0.5",
-    "typescript": "^4.0.3"
-  }
+  "dependencies": {}
 }
