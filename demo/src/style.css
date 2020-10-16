@@ -44,22 +44,6 @@ input {
     margin-top: 32px;
 }
 
-[data-output="normalized"] {
-    font-size: 36px;
-    font-weight: bold;
-}
-
-[data-output="normalizedShort"] {
-    font-size: 18px;
-    color: #666;
-    margin-top: 16px;
-}
-
-[data-output="json"] {
-    font-size: 14px;
-    line-height: 1.2em;
-}
-
 .output-details {
     margin-top: 32px;
 }
@@ -76,4 +60,8 @@ input {
 .showcase {
     text-align: left;
     font-size: 0.8em;
+}
+
+canvas {
+    border: 2px solid #44f;
 }

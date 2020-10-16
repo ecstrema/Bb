@@ -33,6 +33,8 @@ export class BbRenderer {
         this.renderChord = chordRendererFactory(v)
     }
 
+    public descriptorOffset = 4;
+
     constructor(context: CanvasRenderingContext2D, parserOptions?: any, rendererOptions?: any) {
         // this._parserOptions = parserOptions;
         this.parseChord  = chordParserFactory   ()
@@ -45,10 +47,25 @@ export class BbRenderer {
     fillChordSymbol(chordSymbol: string, x: number, y: number) {
         const parsedChord = this.parseChord(chordSymbol)
 
-        if (parsedChord) {
-            console.log(this.renderChord(parsedChord))
-
+        if (!parsedChord) {
+            console.log('Invalid chord given: ' + chordSymbol)
+            return;
         }
+        // const renderedChord = this.renderChord(parsedChord);
+
+        const root = parsedChord.formatted.rootNote
+        const bass = parsedChord.formatted.bassNote
+        const descriptor = parsedChord.formatted.descriptor
+        const extensions = parsedChord.formatted.chordChanges
+
+        const rootMetrics = this.context.measureText(root)
+        const bassMetrics = this.context.measureText(bass)
+        const descriptorMetrics = this.context.measureText(descriptor)
+        // const extensionsMetrics = this.context.measureText(extensions)
+
+        this.context.fillText(root, x, y)
+        this.context.fillText(descriptor, x + descriptorMetrics.width, y - this.descriptorOffset)
+
     }
 
 }

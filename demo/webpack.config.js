@@ -15,10 +15,10 @@ const config = {
     mode: 'development',
     devtool: 'inline-source-map',
 
-    entry: './src/index.ts',
+    entry: './src/main.ts',
 
     output: {
-        filename: 'bundle.js',
+        filename: 'main.js',
         path: buildDir,
     },
 
