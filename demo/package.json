@@ -4,7 +4,9 @@
   "description": "chord-symbol demo site",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./dist && npx webpack"
+    "build:deps": "cd .. && npm run build && cd demo",
+    "build": "npm run build:deps && rimraf ./dist && npx webpack",
+    "start": "npm run build:deps && webpack-dev-server --open"
   },
   "author": "",
   "license": "MIT",
@@ -21,5 +23,7 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {}
+  "dependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
 }

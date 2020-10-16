@@ -17,6 +17,10 @@ const config = {
 
     entry: './src/main.ts',
 
+    devServer: {
+        contentBase: './dist',
+    },
+
     output: {
         filename: 'main.js',
         path: buildDir,
