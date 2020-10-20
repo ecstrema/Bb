@@ -27,7 +27,7 @@ const config = {
     },
 
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new CopyPlugin({
             patterns: [
                 { from: 'src/chordSymbol.png', to: buildDir },
