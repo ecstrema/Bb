@@ -1,5 +1,5 @@
 import { BoundingBox } from 'bounding-boxes';
-import { Chord, chordParserFactory, ChordParserOptions, chordRendererFactory, ChordRendererOptions } from 'chord-symbol';
+import { Chord, chordParserFactory, chordRendererFactory, ParserConfiguration, RendererConfiguration } from 'chord-symbol';
 import { BbChordSymbolOptions } from './bb-chord-symbol-options';
 import { BbText } from './bb-text';
 import { BbTextFragment } from './bb-text-fragment';
@@ -28,20 +28,20 @@ export class BbRenderer {
     }
 
 
-    private _rendererOptions : ChordRendererOptions;
-    public get rendererOptions(): ChordRendererOptions {
+    private _rendererOptions: RendererConfiguration;
+    public get rendererOptions(): RendererConfiguration {
         return this._rendererOptions;
     }
-    public set rendererOptions(v: ChordRendererOptions) {
+    public set rendererOptions(v: RendererConfiguration) {
         v.printer = 'raw'
         this._rendererOptions = v;
         this.renderChord = chordRendererFactory(v)
     }
-    private _parserOptions : ChordParserOptions;
-    public get parserOptions(): ChordParserOptions {
+    private _parserOptions: ParserConfiguration;
+    public get parserOptions(): ParserConfiguration {
         return this._parserOptions;
     }
-    public set parserOptions(v: ChordParserOptions) {
+    public set parserOptions(v: ParserConfiguration) {
         this._parserOptions = v;
         this.parseChord = chordParserFactory(v)
     }
@@ -53,7 +53,7 @@ export class BbRenderer {
      */
     public chordSymbolOptions: BbChordSymbolOptions = new BbChordSymbolOptions();
 
-    constructor(context: CanvasRenderingContext2D, parserOptions: ChordParserOptions = {}, rendererOptions: ChordRendererOptions = {}) {
+    constructor(context: CanvasRenderingContext2D, parserOptions: ParserConfiguration = {}, rendererOptions: RendererConfiguration = {}) {
         this._parserOptions = parserOptions;
         this.parseChord  = chordParserFactory (parserOptions)
         rendererOptions.printer = 'raw'
