@@ -78,48 +78,71 @@ export class BbRenderer {
     }
 
     /**
-     * Similar to the HTML5 canvas' `fillText` method, this function draws text on the canvas.
+     * Similar to the HTML5 canvas' `fillText` method,
+     * this function draws laid out text on the canvas.
      *
-     * @param laidOutChord
-     * @param x
-     * @param y
+     * A note on baselines:
+     * - top here signifies the top of the chord symbol.
+     * - hanging is for the top of the chord Root.
+     * - ideographic is for center.
+     * - alphabetic means the bottom of the Root symbol.
+     * - bottom is the bottom of the whole chord: it might be lower if there is a bass note.
+     *
+     * @param text The Text object to paint.
+     * @param x The x pos of drawing.
+     * @param y The y pos of drawing.
      */
     fillText(text: BbText, x: number, y: number): void {
-        // this.context.fillRect(x, y - 12, 200, 1)
+        this.context.fillRect(x, y, 200, 1)
         this.context.save();
         // Ensure correct alignment
         const fragment = text.fragments[0];
-        let trY = fragment.bbox.y + fragment.metrics(this.context).actualBoundingBoxDescent
-
-        let trX = fragment.bbox.h / 2;
-        switch (this.context.textAlign) {
-            case 'start': /** trY += 0 */; break;
-            case 'left': /** trY += 0 */; break;
-            case 'center': trX += text.bbox.w / 2; break;
-            case 'right': trX += text.bbox.w; break;
-            case 'end': trX += text.bbox.w; break;
+        let trY = 0
+        function warn() {
+            console.warn("Note that bounding boxes will be offset if you use a special text baseline or text alignment.");
+        }
+        switch (this.context.textBaseline) {
+            case 'top': trY += text.bbox.h / 2; warn(); break;
+            case 'hanging': trY += text.fragments[0]?.bbox.h / 2; warn(); break;
+            case 'ideographic': /**trY += 0*/; break;
+            case 'alphabetic': trY -= text.fragments[0]?.bbox.h / 2; warn(); break;
+            case 'bottom': trY -= text.bbox.h / 2; warn(); break;
 
             default:
                 console.error('Unknown context textAlign.')
                 break;
         }
-        // this.context.translate(trX, y);
-        text.translate(trX, trY)
+
+        let trX = 0;
+        switch (this.context.textAlign) {
+            case 'start': /** trY += 0 */; break;
+            case 'left': /** trY += 0 */; break;
+            case 'center': trX += text.bbox.w / 2; warn(); break;
+            case 'right': trX += text.bbox.w; warn(); break;
+            case 'end': trX += text.bbox.w; warn(); break;
+
+            default:
+                console.error('Unknown context textAlign.')
+                break;
+        }
 
         // save context state
         this.context.textAlign = 'left'
         this.context.textBaseline = 'middle'
         text.fragments.forEach(fragment => {
+            const actualX = fragment.bbox.x + x + trX;
+            const actualY = fragment.bbox.y + y + trY;
+
             if (fragment.scaleX !== 1 || fragment.scaleY !== 1) {
                 this.context.save()
-                this.context.translate(x + fragment.bbox.x, y + fragment.bbox.y);
+                this.context.translate(actualX, actualY);
                 this.context.scale(fragment.scaleX, fragment.scaleY);
-                this.context.translate(-(x + fragment.bbox.x), -(y + fragment.bbox.y));
-                this.context.fillText(fragment.text, fragment.bbox.x + x, fragment.bbox.y + y)
+                this.context.translate(-actualX, -actualY);
+                this.context.fillText(fragment.text, actualX, actualY)
                 this.context.restore();
             }
             else {
-                this.context.fillText(fragment.text, fragment.bbox.x + x, fragment.bbox.y + y);
+                this.context.fillText(fragment.text, actualX, actualY);
             }
         });
         this.context.restore();
