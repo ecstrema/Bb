@@ -105,7 +105,7 @@ export class BbRenderer {
             case 'top': trY += text.bbox.h / 2; warn(); break;
             case 'hanging': trY += text.fragments[0]?.bbox.h / 2; warn(); break;
             case 'ideographic': /**trY += 0*/; break;
-            case 'alphabetic': trY -= text.fragments[0]?.bbox.h / 2; warn(); break;
+            case 'alphabetic': trY -= text.fragments[0]?.metrics(this.context).actualBoundingBoxAscent; warn(); break;
             case 'bottom': trY -= text.bbox.h / 2; warn(); break;
 
             default:
@@ -128,7 +128,7 @@ export class BbRenderer {
 
         // save context state
         this.context.textAlign = 'left'
-        this.context.textBaseline = 'middle'
+        this.context.textBaseline = 'top'
         text.fragments.forEach(fragment => {
             const actualX = fragment.bbox.x + x + trX;
             const actualY = fragment.bbox.y + y + trY;
@@ -307,17 +307,18 @@ export class BbRenderer {
     private addParenthesis(text: string, fontSize: number, currentX: number, qualityOffsetY: number, height: number, fragments: BbTextFragment[]) {
         const metrics = this.context.measureText(text);
         const parenHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-        const actualHeight = (height + this.chordSymbolOptions.parenthesesMargin * fontSize) / parenHeight;
+        const scaleX = (height + this.chordSymbolOptions.parenthesesMargin * fontSize) / parenHeight;
+        const scaledHeight = parenHeight * scaleX
         const parenthesis = new BbTextFragment(
             text,
             BoundingBox.fromHW(
-                actualHeight,
+                scaleX * parenHeight,
                 metrics.width,
                 text === ')' ? currentX - fontSize * this.chordSymbolOptions.parenthesesInset : currentX,
-                -qualityOffsetY + this.chordSymbolOptions.parenthesesYOffset * parenHeight
+                -qualityOffsetY + this.chordSymbolOptions.parenthesesYOffset * parenHeight + parenHeight / 2 - scaledHeight / 2
                 ),
             1,
-            actualHeight
+            scaleX
             );
         fragments.push(parenthesis);
         if (text === '(') {
