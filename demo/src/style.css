@@ -13,8 +13,12 @@ body {
 }
 
 .container {
+    margin: auto;
+}
+
+.half {
     width: 50%;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .links {

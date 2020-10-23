@@ -1,3 +1,5 @@
+import { BbChordSymbolParenthesesOptions } from "./bb-chord-symbol-parentheses-options";
+
 /**
  * The options that can be passed to a BbRenderer
  * to modify how it renders chord symbols.
@@ -26,36 +28,58 @@ export class BbChordSymbolOptions {
      * The vertical margin between extensions.
      * @note this value is a multiplier of the font size.
      */
-    extensionsVerticalMargin: number = 0.1;
-
+    extensionsVerticalMargin: number = 0.05;
 
     /**
-     * Whether or note parentheses should be shown.
+     * Options applying to parentheses.
      */
-    showParentheses: boolean = true;
+    parentheses = new BbChordSymbolParenthesesOptions();
+
+    separator = new BbSeparatorOptions();
 
     /**
-     * How much the extensions will inset in the parentheses
+     * Apply a relative Y offset to the bass note.
+     */
+    bassYOffset: number = 0.2;
+}
+
+
+/**
+ * Separator options.
+ *
+ * @export
+ * @class BbSeparatorOptions
+ */
+export class BbSeparatorOptions {
+
+    /**
+     * Apply a relative Y offset to the separator before the bass note.
+     */
+    yOffset: number = 0.1;
+
+    /**
+     * Inset the separator left.
+     */
+    leftInset: number = 0.15;
+
+    /**
+     * Inset the separator right.
+     */
+    rightInset: number = 0.1;
+
+    /**
+     * This angle in radian will be applied to the separator.
      *
+     * Useful if your font's separator is too or not enough slanted.
      */
-    parenthesesInset: number = 0.1;
+    angle: number = 0;
 
     /**
-     * In most fonts, Parentheses aren't made to be scaled
-     * and are not exactly centered vertically over the letters.
-     *
-     * To prevent this, you should override
+     * X scale factor.
      */
-    parenthesesYOffset: number = -0.1;
-
+    scaleX: number = 1.3;
     /**
-     * The how much the parentheses will be bigger than their content
+     * Y scale factor.
      */
-    parenthesesMargin: number = 0.4;
-
-
-    separatorLeftInset: number = 0.15;
-    separatorRightInset: number = 0.05;
-    separatorYOffset: number = 0.3;
-    bassYOffset: number = 0.1;
+    scaleY: number = 1.3;
 }

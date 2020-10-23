@@ -4,9 +4,11 @@ import { BbText } from "../../dist/bb-text";
 const singleCanvas = document.getElementById("singleCanvas") as HTMLCanvasElement
 const chordInput = document.getElementById('chordInput') as HTMLInputElement
 const showBboxes = document.getElementById('showbboxes') as HTMLInputElement
+const showSymbol = document.getElementById('showSymbol') as HTMLInputElement
 
 const singleCtx = singleCanvas.getContext('2d') as CanvasRenderingContext2D
-singleCtx.font = "40px Linux Libertine"
+var font = "80px Roboto"
+singleCtx.font = font
 const formatter = new BbRenderer(singleCtx)
 
 const margins = 10;
@@ -17,20 +19,22 @@ function updateCanvas() {
         if (!laidOutChord)
             return
 
-        // singleCanvas.width = laidOutChord.bbox.width + margins * 2;
-        // singleCanvas.height = laidOutChord.bbox.height + margins;
+        console.log(singleCanvas.height)
+        console.log('bbox.w', laidOutChord.bbox.width)
+        singleCtx.canvas.width = laidOutChord.bbox.width + margins * 2;
+        singleCtx.canvas.height = laidOutChord.bbox.height + margins * 2;
+        console.log(singleCanvas.height)
 
-        singleCtx.save()
         singleCtx.clearRect(0, 0, singleCanvas.width, singleCanvas.height);
-        singleCtx.font = "40px Linux Libertine"
+        singleCtx.font = font
 
         const bbox = laidOutChord.bbox;
-        singleCtx.translate(100, 100)
-        formatter.fillText(
-            laidOutChord,
-            bbox.x,
-            bbox.y + bbox.h / 2
-            )
+        singleCtx.translate(margins, margins - bbox.y);
+        if (showSymbol.checked == true) {
+            formatter.fillText(
+                laidOutChord
+                )
+        }
         if (showBboxes.checked == true) {
             singleCtx.strokeRect(
                 bbox.x,
@@ -48,18 +52,6 @@ function updateCanvas() {
                     )
             })
         }
-        singleCtx.restore()
-        // formatter.fillText(
-        //     laidOutChord,
-        //     singleCanvas.width / 2 - laidOutChord.bbox.width / 2,
-        //     singleCanvas.height / 2
-        //     )
-        // singleCtx.strokeRect(
-        //     singleCanvas.width / 2 - laidOutChord.bbox.width / 2,
-        //     singleCanvas.height / 2,
-        //     laidOutChord.bbox.w,
-        //     laidOutChord.bbox.h
-        //     )
     }
     else {
         throw new Error("Some ids weren't found.");
@@ -70,6 +62,9 @@ chordInput.addEventListener('keyup', () => {
     updateCanvas()
 })
 showBboxes.addEventListener('click', () => {
+    updateCanvas()
+})
+showSymbol.addEventListener('click', () => {
     updateCanvas()
 })
 
