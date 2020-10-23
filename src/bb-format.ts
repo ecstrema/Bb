@@ -161,12 +161,18 @@ export class BbFormat {
         let root = renderedChord.formatted.rootNote;
         let descriptor = renderedChord.formatted.descriptor;
         if (descriptor) {
-            if (descriptor === 'mi') {
-                descriptor = '';
-                root += '-';
-            }
-            else if (descriptor.startsWith('mi')) {
-                descriptor = descriptor.replace('mi', '-');
+            // Move to root to center
+            if (this.chordSymbolOptions.useMinusSignForMinorChords) {
+                if (descriptor === 'mi' || descriptor === '-' || descriptor === 'min') {
+                    descriptor = '';
+                    root += '-';
+                }
+                else if (descriptor.startsWith('mi')) {
+                    descriptor = descriptor.replace('mi', '-');
+                }
+                else if (descriptor.startsWith('min')) {
+                    descriptor = descriptor.replace('min', '-');
+                }
             }
         }
         if (root) {

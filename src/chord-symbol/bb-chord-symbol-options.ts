@@ -46,6 +46,12 @@ export class BbChordSymbolOptions {
      * Apply a relative Y offset to the bass note.
      */
     bassYOffset: number = 0.27;
+
+    /**
+     * Wheter to use a '-' sign for minor chords instead of 'mi'
+     *
+     */
+    useMinusSignForMinorChords: boolean = true;
 }
 
 
