@@ -53,6 +53,17 @@ export class BbFormat {
         this._context = context;
     }
 
+    /**
+     * A shorthand for
+     * ```typescript
+     * formatter.fillText(formatter.layoutChordSymbol(symbol), x, y)
+     * ````
+     *
+     * @param chordSymbol The symbol string
+     * @param x left x pos of the symbol
+     * @param y top y pos of the symbol
+     * @return {*}
+     */
     fillChordSymbol(chordSymbol: string, x: number, y: number): void {
         const parsedChord = this.parseChord(chordSymbol);
 
@@ -72,6 +83,7 @@ export class BbFormat {
      * Similar to the HTML5 canvas' `fillText` method,
      * this function draws laid out text on the canvas.
      *
+     * Not true anymore!!!
      * A note on baselines:
      * - top here signifies the top of the chord symbol.
      * - hanging is for the top of the chord Root.
@@ -85,7 +97,8 @@ export class BbFormat {
      */
     fillText(text: BbText, x: number = text.bbox.x, y: number = text.bbox.y): void {
         this.context.save();
-        // ensure right content state
+
+        // ensure right content horizontal alignment
         this.context.textAlign = 'left'
         // A comment is needed for that 'alphabetic' thing:
         // 'top' does not compute a reliable top,
@@ -137,11 +150,25 @@ export class BbFormat {
             return null;
         }
 
+        this.context.save();
+        this.context.textBaseline = 'alphabetic';
+        this.context.textAlign = 'left';
+
         const fontSize = BbFormatUtil.getContextFontSize(this.context);
         const fragments: BbTextFragment[] = [];
         let currentX = 0;
 
-        const root = renderedChord.formatted.rootNote;
+        let root = renderedChord.formatted.rootNote;
+        let descriptor = renderedChord.formatted.descriptor;
+        if (descriptor) {
+            if (descriptor === 'mi') {
+                descriptor = '';
+                root += '-';
+            }
+            else if (descriptor.startsWith('mi')) {
+                descriptor = descriptor.replace('mi', '-');
+            }
+        }
         if (root) {
             currentX = this.layoutRoot(
                 BbFormatUtil.replaceSharpsFlats(root),
@@ -150,7 +177,6 @@ export class BbFormat {
                 )
         }
 
-        const descriptor = renderedChord.formatted.descriptor;
         let center = 0;
         if (descriptor) {
             const result = this.layoutDescriptor(
@@ -177,6 +203,8 @@ export class BbFormat {
                 fontSize
                 );
         }
+
+        this.context.restore();
 
         return new BbText(fragments);
     }

@@ -52,11 +52,4 @@ export class BbText {
             this._fragments.map((fragment: BbTextFragment) => { return fragment.bbox })
         );
     }
-
-    translate(dx: number, dy: number): void {
-        this.fragments.forEach(f => {
-            f.bbox.move(dx, dy)
-        })
-        this._bbox.move(dx, dy)
-    }
 }

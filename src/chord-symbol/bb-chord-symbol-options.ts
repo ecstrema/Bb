@@ -15,14 +15,14 @@ export class BbChordSymbolOptions {
      *
      * @note this value is a multiplier of the font size.
      */
-    descriptorHorizontalInset: number = 0.05;
+    descriptorHorizontalInset: number = 0;
     /**
      * The vertical offset to apply to the descriptor.
      * The descriptor is everything except the root and bass notes.
      *
      * @note this value is a multiplier of the font size.
      */
-    descriptorVerticalOffset: number = 0.3;
+    descriptorVerticalOffset: number = 0.35;
 
     /**
      * The vertical margin between extensions.
