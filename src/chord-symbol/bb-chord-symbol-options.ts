@@ -35,12 +35,17 @@ export class BbChordSymbolOptions {
      */
     parentheses = new BbChordSymbolParenthesesOptions();
 
+    /**
+     * Options that apply to the separator.
+     *
+     * The separator is the slash between the quality and the bass note.
+     */
     separator = new BbSeparatorOptions();
 
     /**
      * Apply a relative Y offset to the bass note.
      */
-    bassYOffset: number = 0.25;
+    bassYOffset: number = 0.27;
 }
 
 
@@ -72,7 +77,7 @@ export class BbSeparatorOptions {
      *
      * Useful if your font's separator is too or not enough slanted.
      *
-     * Note that the separator's bounding box is not modified accordingly,
+     * @note that the separator's bounding box is not modified accordingly,
      * and is not giving true results anymore.
      */
     angle: number = 0;

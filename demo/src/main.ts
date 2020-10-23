@@ -1,5 +1,5 @@
-import { BbRenderer } from "../../dist/bb-renderer";
-import { BbText } from "../../dist/bb-text";
+import { BbFormat } from "../../src/bb-format";
+import { BbText } from "../../src/bb-text";
 
 const singleCanvas = document.getElementById("singleCanvas") as HTMLCanvasElement
 const chordInput = document.getElementById('chordInput') as HTMLInputElement
@@ -9,7 +9,7 @@ const showSymbol = document.getElementById('showSymbol') as HTMLInputElement
 const singleCtx = singleCanvas.getContext('2d') as CanvasRenderingContext2D
 var font = "80px Roboto"
 singleCtx.font = font
-const formatter = new BbRenderer(singleCtx)
+const formatter = new BbFormat(singleCtx)
 
 const margins = 10;
 
@@ -18,15 +18,12 @@ function updateCanvas() {
         const laidOutChord: BbText = formatter.layoutChordSymbol(chordInput.value);
         if (!laidOutChord)
             return
-
-        console.log(singleCanvas.height)
-        console.log('bbox.w', laidOutChord.bbox.width)
         singleCtx.canvas.width = laidOutChord.bbox.width + margins * 2;
         singleCtx.canvas.height = laidOutChord.bbox.height + margins * 2;
-        console.log(singleCanvas.height)
 
         singleCtx.clearRect(0, 0, singleCanvas.width, singleCanvas.height);
-        singleCtx.font = font
+        // This has to be reset because the context is reset when the canvas get resized.
+        singleCtx.font = font;
 
         const bbox = laidOutChord.bbox;
         singleCtx.translate(margins, margins - bbox.y);

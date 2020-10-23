@@ -1,11 +1,10 @@
 import { BoundingBox } from 'bounding-boxes';
 import { Chord, chordParserFactory, chordRendererFactory, ParserConfiguration, RendererConfiguration } from 'chord-symbol';
-import { BbChordSymbolOptions } from './bb-chord-symbol-options';
-import { BbParenthesisType, BbParenthesisUtil } from './bb-chord-symbol-parentheses-options';
+import { BbChordSymbolOptions } from './chord-symbol/bb-chord-symbol-options';
 import { BbText } from './bb-text';
 import { BbTextFragment } from './bb-text-fragment';
 
-export class BbRenderer {
+export class BbFormat {
 
     private parseChord: (chordSymbol: string) => Chord | null;
     private renderChord: (chord: Chord) => String | Chord | null;
@@ -46,26 +45,26 @@ export class BbRenderer {
 
     constructor(context: CanvasRenderingContext2D, parserOptions: ParserConfiguration = {}, rendererOptions: RendererConfiguration = {}) {
         this._parserOptions = parserOptions;
-        this.parseChord  = chordParserFactory (parserOptions)
-        rendererOptions.printer = 'raw'
+        this.parseChord  = chordParserFactory(parserOptions);
+        rendererOptions.printer = 'raw';
         this._rendererOptions = rendererOptions;
-        this.renderChord = chordRendererFactory (rendererOptions)
-        this._context = context
+        this.renderChord = chordRendererFactory(rendererOptions);
+        this._context = context;
     }
 
     fillChordSymbol(chordSymbol: string, x: number, y: number): void {
         const parsedChord = this.parseChord(chordSymbol)
 
         if (!parsedChord) {
-            console.log('Invalid chord given: ' + chordSymbol)
+            // console.log('Invalid chord given: ' + chordSymbol)
             return;
         }
-        const fragments = this.layoutChordSymbol(chordSymbol);
-        if (!fragments) {
-            console.log('Text could not be laid out: ' + chordSymbol)
+        const text = this.layoutChordSymbol(chordSymbol);
+        if (!text) {
+            // console.log('Text could not be laid out: ' + chordSymbol)
             return;
         }
-        this.fillText(fragments, x, y);
+        this.fillText(text, x, y);
     }
 
     /**
@@ -137,15 +136,15 @@ export class BbRenderer {
             return null;
         }
 
-        const fontSize = this.getContextFontSize();
-        const f: BbTextFragment[] = [];
+        const fontSize = BbFormatUtil.getContextFontSize(this.context);
+        const fragments: BbTextFragment[] = [];
         let currentX = 0;
 
         const root = renderedChord.formatted.rootNote;
         if (root) {
             currentX = this.layoutRoot(
-                this.replaceSharpsFlats(root),
-                f,
+                BbFormatUtil.replaceSharpsFlats(root),
+                fragments,
                 fontSize
                 )
         }
@@ -153,7 +152,11 @@ export class BbRenderer {
         const descriptor = renderedChord.formatted.descriptor;
         let center = 0;
         if (descriptor) {
-            const result = this.layoutDescriptor(this.replaceSharpsFlats(descriptor), currentX, f, fontSize);
+            const result = this.layoutDescriptor(
+                BbFormatUtil.replaceSharpsFlats(descriptor),
+                currentX,
+                fragments,
+                fontSize);
             currentX = result.currentX;
             center = result.center;
         }
@@ -161,15 +164,20 @@ export class BbRenderer {
 
         const extensions = renderedChord.formatted.chordChanges;
         if (extensions.length) {
-            currentX = this.layoutExtensions(extensions, currentX, f, fontSize, center);
+            currentX = this.layoutExtensions(extensions, currentX, fragments, fontSize, center);
         }
 
         const bass = renderedChord.formatted.bassNote;
         if (bass) {
-            currentX = this.layoutBassChange(bass, currentX, f, fontSize);
+            currentX = this.layoutBassChange(
+                BbFormatUtil.replaceSharpsFlats(bass),
+                currentX,
+                fragments,
+                fontSize
+                );
         }
 
-        return new BbText(f);
+        return new BbText(fragments);
     }
 
     private layoutRoot(root: string, fragments: BbTextFragment[], fontSize: number): number {
@@ -198,7 +206,7 @@ export class BbRenderer {
             -fontSize * this.chordSymbolOptions.descriptorVerticalOffset
         )
         const d = new BbTextFragment(
-            this.replaceSharpsFlats(descriptor),
+            BbFormatUtil.replaceSharpsFlats(descriptor),
             bbox,
             m.actualBoundingBoxAscent
             );
@@ -215,7 +223,7 @@ export class BbRenderer {
         let totalHeight = extMargin * (extensions.length - 1);
 
         extensions.forEach((ext: string) => {
-            const m = this.context.measureText(this.replaceSharpsFlats(ext));
+            const m = this.context.measureText(BbFormatUtil.replaceSharpsFlats(ext));
             maxExtWidth = Math.max(maxExtWidth, m.width);
             totalHeight += m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
         });
@@ -223,18 +231,19 @@ export class BbRenderer {
         const extTop = center - totalHeight * .5;
         if (this.chordSymbolOptions.parentheses.show) {
             currentX = this.layoutParenthesis(
-                BbParenthesisUtil.opening[this.chordSymbolOptions.parentheses.type],
+                this.chordSymbolOptions.parentheses.type[0],
                 currentX,
                 fragments,
                 extTop,
-                totalHeight
+                totalHeight,
+                true
             );
         }
 
         let currentY = extTop;
         extensions.forEach((ext: string, index: number) => {
             currentY = this.addExtension(
-                this.replaceSharpsFlats(ext),
+                BbFormatUtil.replaceSharpsFlats(ext),
                 currentX,
                 currentY,
                 fragments,
@@ -246,18 +255,19 @@ export class BbRenderer {
 
         if (this.chordSymbolOptions.parentheses.show) {
             currentX = this.layoutParenthesis(
-                BbParenthesisUtil.closing[this.chordSymbolOptions.parentheses.type],
+                this.chordSymbolOptions.parentheses.type[1],
                 currentX,
                 fragments,
                 extTop,
-                totalHeight
+                totalHeight,
+                false
                 );
         }
 
         return currentX;
     }
 
-    private layoutParenthesis(text: string, currentX: number, fragments: BbTextFragment[], top: number, height: number): number {
+    private layoutParenthesis(text: string, currentX: number, fragments: BbTextFragment[], top: number, height: number, opening: boolean): number {
         const delta = height * this.chordSymbolOptions.parentheses.scale - height;
         top = top - delta * .5;
         height += delta;
@@ -268,7 +278,7 @@ export class BbRenderer {
         const scaleY = height / normalParenHeight;
         const options = this.chordSymbolOptions.parentheses
 
-        if (BbParenthesisUtil.isClosing(text)) {
+        if (!opening) {
             currentX -= metrics.width * this.chordSymbolOptions.parentheses.right.inset;
         }
 
@@ -278,7 +288,7 @@ export class BbRenderer {
                 height,
                 metrics.width,
                 currentX,
-                top + height * (BbParenthesisUtil.isClosing(text) ? options.right.yOffset : options.left.yOffset)
+                top + height * (opening ? options.left.yOffset : options.right.yOffset)
             ),
             metrics.actualBoundingBoxAscent * scaleY,
             1,
@@ -286,10 +296,9 @@ export class BbRenderer {
         )
         fragments.push(p);
 
-        if (BbParenthesisUtil.isOpening(text)) {
+        if (opening) {
             currentX -= metrics.width * this.chordSymbolOptions.parentheses.left.inset;
         }
-
 
         return currentX + metrics.width;
     }
@@ -327,11 +336,14 @@ export class BbRenderer {
         const options = this.chordSymbolOptions.separator;
         currentX -= options.leftInset * metrics.width;
 
+        const scaledW = metrics.width * options.scaleX;
+        const scaledH = (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent) * options.scaleY;
+
         const sep = new BbTextFragment(
             text,
             BoundingBox.fromHW(
-                (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent) * options.scaleY,
-                metrics.width * options.scaleX,
+                scaledH,
+                scaledW,
                 currentX,
                 yOffset
             ),
@@ -342,7 +354,7 @@ export class BbRenderer {
         )
         fragments.push(sep);
 
-        return currentX + metrics.width - options.rightInset * metrics.width;
+        return currentX + scaledW - options.rightInset * scaledW;
     }
 
     private layoutBass(bass: string, currentX: number, fragments: BbTextFragment[], yOffset: number): number {
@@ -361,11 +373,13 @@ export class BbRenderer {
         fragments.push(sep);
 
         return currentX + metrics.width;
-
     }
 
-    private getContextFontSize(): number {
-        const fontFragments = this.context.font.split(" ")
+}
+
+class BbFormatUtil {
+    static getContextFontSize(context: CanvasRenderingContext2D): number {
+        const fontFragments = context.font.split(" ")
         for (const fragment of fontFragments) {
             const regExpResult = fragment.match(/([0-9]+)px/)
             if (regExpResult) {
@@ -375,8 +389,7 @@ export class BbRenderer {
         return 12;
     }
 
-    private replaceSharpsFlats(str: string) {
+    static replaceSharpsFlats(str: string) {
         return str.replace('b', '\u266D').replace('#', '\u266F')
     }
-
 }

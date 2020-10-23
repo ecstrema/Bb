@@ -11,14 +11,19 @@ export class BbChordSymbolParenthesesOptions {
     show: boolean = true;
 
     /**
-     * The parenthesis type to show.
-     * It should be one of
-     *  - `BbParenthesisType.Parenthesis`
-     *  - `BbParenthesisType.Bracket`
-     *  - `BbParenthesisType.Brace`
+     * A **2** character an opening a closing character. An error will be thrown if
+     * there is less than 2 characters. Subsequent characters will be ignored.
      *
+     * Examples:
+     * ```
+     * '()'
+     * '[]'
+     * '{}'
+     * '⟨⟩'
+     * '||'
+     * ```
      */
-    type: BbParenthesisType = BbParenthesisType.Parenthesis;
+    type: string = '()';
 
     /**
      * How much the parentheses will be bigger than their content.
@@ -67,42 +72,7 @@ export class BbChordSymbolParenthesisOptions {
 export enum BbParenthesisType {
     Parenthesis = 0,
     Bracket = 1,
-    Brace = 2
-}
-
-/**
- * Where opening and closing parentheses are defined.
- *
- * This class also offers convenient functions for checking if the parenthesis is opening or closing.
- *
- * @export
- * @class BbParenthesisUtil
- */
-export class BbParenthesisUtil {
-    static opening: string[] = [
-        '(',
-        '[',
-        '{'
-    ]
-
-    static closing: string[] = [
-        ')',
-        ']',
-        '}'
-    ]
-
-    /**
-     * True if the text provided is part of the 'opening' array.
-     */
-    static isOpening(text: string): boolean {
-        return this.opening.includes(text);
-    }
-
-    /**
-     * True if the text provided is part of the 'closing' array.
-     */
-    static isClosing(text: string): boolean {
-        return this.closing.includes(text);
-    }
-
+    Brace = 2,
+    Chevrons = 3,
+    Pipe = 4
 }
