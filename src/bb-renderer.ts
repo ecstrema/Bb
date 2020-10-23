@@ -113,7 +113,9 @@ export class BbRenderer {
                     this.context.scale(fragment.scaleX, fragment.scaleY);
                 }
                 if (fragment.angle) {
+                    this.context.translate(0, fragment.bbox.h * -.5)
                     this.context.rotate(fragment.angle);
+                    this.context.translate(0, fragment.bbox.h * .5)
                 }
                 this.context.translate(-actualX, -actualY);
                 this.context.fillText(fragment.text, actualX, actualY)
