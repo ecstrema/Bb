@@ -62,17 +62,3 @@ export class BbChordSymbolParenthesisOptions {
      */
     yOffset: number = 0;
 }
-
-/**
- * Available Parenthesis types.
- *
- * @export
- * @enum {number}
- */
-export enum BbParenthesisType {
-    Parenthesis = 0,
-    Bracket = 1,
-    Brace = 2,
-    Chevrons = 3,
-    Pipe = 4
-}
