@@ -5,6 +5,7 @@
  *  - `intersects(other)`
  *  - `intersection(other)`
  *  - `union(other)`
+ *  - `smallestBoxEnclosing(...boxes)`
  *
  * Note that the the points are always ordered: x1 is always smaller than x2,
  * and y1 is always smaller than y2.
@@ -12,7 +13,7 @@
  * Because of this, height and width are always positive.
  */
 export class BoundingBox {
-    /** The bounding box's height */
+    /** The bounding box's height. */
     public get height() : number {
         return this.y2 - this.y1;
     }
@@ -20,7 +21,7 @@ export class BoundingBox {
         this.y2 = this.y1 + v;
         this.orderY();
     }
-    /** The shorter way to the bbox's height */
+    /** The shorter way to the bbox's height .*/
     public get h(): number {
         return this.height;
     }
@@ -36,7 +37,7 @@ export class BoundingBox {
         this.x2 = this.x1 + v;
         this.orderX();
     }
-    /** The shorter way to the bbox's width */
+    /** The shorter way to the bbox's width. */
     public get w(): number {
         return this.width;
     }
@@ -44,9 +45,9 @@ export class BoundingBox {
         this.width = v;
     }
 
-    /** The bounding box's first corner's x */
+    /** The bounding box's first corner's x. */
     private _x1 : number;
-    /** The bounding box's first corner's x */
+    /** The bounding box's first corner's x. */
     public get x1() : number {
         return this._x1;
     }
@@ -55,9 +56,9 @@ export class BoundingBox {
         this.orderX();
     }
 
-    /** The bounding box's first corner's y */
+    /** The bounding box's first corner's y. */
     private _y1 : number;
-    /** The bounding box's first corner's y */
+    /** The bounding box's first corner's y. */
     public get y1() : number {
         return this._y1;
     }
@@ -66,9 +67,9 @@ export class BoundingBox {
         this.orderY();
     }
 
-    /** The bounding box's second corner's x */
+    /** The bounding box's second corner's x. */
     private _x2 : number;
-    /** The bounding box's second corner's x */
+    /** The bounding box's second corner's x .*/
     public get x2() : number {
         return this._x2;
     }
@@ -77,9 +78,9 @@ export class BoundingBox {
         this.orderX();
     }
 
-    /** The bounding box's second corner's y */
+    /** The bounding box's second corner's y. */
     private _y2: number;
-    /** The bounding box's second corner's y */
+    /** The bounding box's second corner's y. */
     public get y2(): number {
         return this._y2;
     }
@@ -104,8 +105,8 @@ export class BoundingBox {
 
     /**
      * Returns true if the point is inside the box, false otherwise.
-     * @param x The point's x
-     * @param y The point's y
+     * @param x The point's x.
+     * @param y The point's y.
      */
     containsPoint(x: number, y: number): boolean {
         return BoundingBox.between(x, this.x1, this.x2) && BoundingBox.between(y, this.y1, this.y2);
@@ -120,7 +121,7 @@ export class BoundingBox {
 
     /**
      * Returns true if the other box touches this one.
-     * @param other The other bounding box
+     * @param other The other bounding box.
      */
     intersects(other: BoundingBox): boolean {
         return !(this.x1 > other.x2 || this.x2 < other.x1 || this.y1 > other.y2 || this.y2 < other.y1);
@@ -137,7 +138,7 @@ export class BoundingBox {
 
     /**
      * Returns the biggest rectangle enclosed in this BoundingBox and `other`.
-     * @param other The other BoundingBox
+     * @param other The other BoundingBox.
      */
     intersection(other: BoundingBox): BoundingBox {
         return new BoundingBox(Math.max(this.x1, other.x1), Math.max(this.y1, other.y1),
@@ -189,21 +190,21 @@ export class BoundingBox {
     /**
      * Move the bbox to these coordinates.
      *
-     * @param x The new x1
-     * @param y The new y1
+     * @param x The new x1.
+     * @param y The new y1.
      */
-    moveTo(x: number, y: number): void {
+    move(x: number, y: number): void {
         this.x = x;
         this.y = y;
     }
 
     /**
-     * Move the bbox by these coordinates.
+     * Translate the bbox by these coordinates.
      *
-     * @param x The x shift amount
-     * @param y The y shift amount
+     * @param x The x shift amount.
+     * @param y The y shift amount.
      */
-    move(x: number, y: number): void {
+    translate(x: number, y: number): void {
         this.x += x;
         this.y += y;
     }
@@ -215,7 +216,7 @@ export class BoundingBox {
      * @see sme
      *
      * @static
-     * @param bboxes The culprits
+     * @param bboxes The culprits.
      * @return {BoundingBox}
      */
     static smallestBoxEnclosing(bboxes: BoundingBox[]): BoundingBox {
@@ -223,9 +224,9 @@ export class BoundingBox {
     }
 
     /**
-     * Smallest Box Enclosing `bboxes`
+     * Smallest Box Enclosing these `bboxes`.
      *
-     * @see smallestBoxEnclosing
+     * @see smallestBoxEnclosing.
      *
      * @static
      * @param bboxes The culprits
@@ -241,7 +242,7 @@ export class BoundingBox {
 
 
     /**
-     * Return a copy of the bounding box
+     * Return a copy of the bounding box.
      */
     copy(): BoundingBox {
         return new BoundingBox(this.x1, this.y1, this.x2, this.y2);
@@ -249,6 +250,8 @@ export class BoundingBox {
 
     /**
      * Add a margin around the box.
+     *
+     * Provide a negative margin to inset the box.
      *
      * ```
      *  new__________
@@ -259,7 +262,7 @@ export class BoundingBox {
      *    |__________| |=margin
      * ```
      *
-     * @param margin The spacing between the old and new box
+     * @param margin The spacing between the old and new box.
      */
     addMargin(margin: number): void {
         this._x1 -= margin;
@@ -271,12 +274,14 @@ export class BoundingBox {
 
     /**
      * Adds margins around the box.
-     * Note that this function uses screen coordinates: (0, 0) is the **top**-left corner
+     * Note that this function uses screen coordinates: (0, 0) is the **top**-left corner.
      *
-     * @param left The margin to add after `x1`
-     * @param top The margin to add before `y1`
-     * @param right The margin to add before `x2`
-     * @param bottom The margin to add after `y2`
+     * Provide negative margins to inset the box.
+     *
+     * @param left The margin to add after `x1`.
+     * @param top The margin to add before `y1`.
+     * @param right The margin to add before `x2`.
+     * @param bottom The margin to add after `y2`.
      */
     addMargins(left: number, top: number, right: number, bottom: number): void {
         this._x1 -= left;

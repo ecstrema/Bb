@@ -4,7 +4,9 @@ Keep track of your elements with bounding boxes.
 
 ## Install
 
-    npm install --save bounding-boxes
+``` shell
+npm install --save bounding-boxes
+```
 
 ## Usage
 
