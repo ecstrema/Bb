@@ -40,7 +40,7 @@ export class BbChordSymbolOptions {
     /**
      * Apply a relative Y offset to the bass note.
      */
-    bassYOffset: number = 0.2;
+    bassYOffset: number = 0.25;
 }
 
 
@@ -71,6 +71,9 @@ export class BbSeparatorOptions {
      * This angle in radian will be applied to the separator.
      *
      * Useful if your font's separator is too or not enough slanted.
+     *
+     * Note that the separator's bounding box is not modified accordingly,
+     * and is not giving true results anymore.
      */
     angle: number = 0;
 

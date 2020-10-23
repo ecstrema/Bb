@@ -10,16 +10,6 @@ export class BbRenderer {
     private parseChord: (chordSymbol: string) => Chord | null;
     private renderChord: (chord: Chord) => String | Chord | null;
 
-    // private _parserOptions : any;
-    // public get parserOptions(): any {
-    //     return this._parserOptions;
-    // }
-    // public set parserOptions(v: any) {
-    //     this._parserOptions = v;
-    //     this.parseChord = chordParserFactory(v)
-    // }
-
-
     private _context: CanvasRenderingContext2D;
     public get context(): CanvasRenderingContext2D {
         return this._context;
@@ -109,13 +99,13 @@ export class BbRenderer {
             if (fragment.scaleX !== 1 || fragment.scaleY !== 1 || fragment.angle !== 0) {
                 this.context.save()
                 this.context.translate(actualX, actualY);
+                if (fragment.angle) {
+                    this.context.translate(fragment.bbox.w * .5, fragment.bbox.h * -.5);
+                    this.context.rotate(fragment.angle);
+                    this.context.translate(fragment.bbox.w * -.5, fragment.bbox.h * .5);
+                }
                 if (fragment.scaleX !== 1 || fragment.scaleY !== 1) {
                     this.context.scale(fragment.scaleX, fragment.scaleY);
-                }
-                if (fragment.angle) {
-                    this.context.translate(0, fragment.bbox.h * -.5)
-                    this.context.rotate(fragment.angle);
-                    this.context.translate(0, fragment.bbox.h * .5)
                 }
                 this.context.translate(-actualX, -actualY);
                 this.context.fillText(fragment.text, actualX, actualY)
@@ -348,7 +338,7 @@ export class BbRenderer {
             metrics.actualBoundingBoxAscent * options.scaleY,
             options.scaleX,
             options.scaleY,
-            -options.angle // TODO: width and height do not take this factor in account.
+            -options.angle // TODO: bbox is broken with this angle
         )
         fragments.push(sep);
 
