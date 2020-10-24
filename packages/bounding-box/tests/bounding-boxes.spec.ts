@@ -226,7 +226,7 @@ describe('moveTo with function', () => {
           x1Final: ${x1Final}, y1Final: ${y1Final}, x2Final: ${x2Final}, y2Final: ${y2Final}`,
           () => {
             const b = new BoundingBox(x1, y1, x2, y2);
-            b.moveTo(newX, newY)
+            b.translate(newX, newY)
             expect(b).toStrictEqual(new BoundingBox(x1Final, y1Final, x2Final, y2Final));
         })
     })

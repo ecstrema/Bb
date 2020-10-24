@@ -3,13 +3,10 @@
   "private": true,
   "scripts": {
     "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
-    "compile": "tsc -b tsconfig.build.json",
-    "prettier": "prettier \"*.{js,json,yml,md}\" \"packages/**/*\"",
-    "format": "npm run prettier -- --write",
-    "format:check": "npm run prettier -- --check",
-    "lint": "npm run format:check",
-    "test": "lerna run test",
-    "prepare": "npm run compile"
+    "build": "tsc -b tsbuild.json",
+    "lint": "eslint . --ext .ts --fix",
+    "lint:ci": "eslint . --ext .ts",
+    "test": "lerna run test"
   },
   "devDependencies": {
     "lerna": "3.22.1",

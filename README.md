@@ -4,16 +4,17 @@
 
 This repository explains how to create monorepos project using npm and TypeScript.
 
-## ToC
+## Table of contents
 
-- [ToC](#toc)
-- [Tools](#tools)
-- [Directory Structure](#directory-structure)
-- [Workspaces](#workspaces)
-- [Dependencies across packages](#dependencies-across-packages)
-- [Resolve dependencies as TypeScript projects](#resolve-dependencies-as-typescript-projects)
-- [Do we still need Lerna ?](#do-we-still-need-lerna-)
-- [License](#license)
+- [How to build TypeScript mono-repo project](#how-to-build-typescript-mono-repo-project)
+  - [Table of contents](#table-of-contents)
+  - [Tools](#tools)
+  - [Directory Structure](#directory-structure)
+  - [Workspaces](#workspaces)
+  - [Dependencies across packages](#dependencies-across-packages)
+  - [Resolve dependencies as TypeScript projects](#resolve-dependencies-as-typescript-projects)
+  - [Do we still need Lerna](#do-we-still-need-lerna)
+  - [License](#license)
 
 ## Tools
 
@@ -24,7 +25,7 @@ This repository explains how to create monorepos project using npm and TypeScrip
 
 Put each package under the `packages` directory.
 
-```
+``` shell
 .
 ├── node_modules/
 ├── README.md
@@ -146,7 +147,7 @@ And create a project which depends on all packages:
 
 Let's exec `npx tsc --build tsconfig.build.json`. The .ts files included in all packages are build at once!
 
-## Do we still need Lerna ?
+## Do we still need Lerna
 
 Partially, yes.
 

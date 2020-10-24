@@ -1,5 +1,5 @@
 import { BoundingBox } from "bounding-boxes";
-import { BbTreeNode } from "./tree-node";
+import { TreeNode } from "tree-model";
 
 /**
  * Base element class
@@ -7,7 +7,7 @@ import { BbTreeNode } from "./tree-node";
  * @export
  * @class BbElement
  */
-export class BbElement extends BbTreeNode {
+export class BbElement extends TreeNode {
 
     /**
      * The element's type. Very useful in switch case statements.

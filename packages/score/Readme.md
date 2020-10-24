@@ -4,11 +4,14 @@ Keep track of your elements with bounding boxes.
 
 ## Install
 
+``` shell
     npm install --save bounding-boxes
+```
 
 ## Usage
 
 ### import
+
 ```typescript
 import { BoundingBox } from 'bounding-boxes';
 ```
@@ -24,7 +27,7 @@ import { BoundingBox } from 'bounding-boxes';
  *  - `intersection(other)`
  *  - `union(other)`
  *
- * If you wish to modify x1 and x2 simulteanously, use the x property.
+ * If you wish to modify x1 and x2 simultaneously, use the x property.
  * Same applies for y.
  *
  * Note that the the points are always ordered: x1 is always smaller than x2,
@@ -116,6 +119,7 @@ export declare class BoundingBox {
 ```
 
 ### Two equivalent boxes
+
 ```typescript
 // From coordinates        (x1, y1, x2, y2)
 let bbox1 = new BoundingBox(10, 10, 20, 20);
@@ -123,7 +127,7 @@ let bbox1 = new BoundingBox(10, 10, 20, 20);
 let bbox2 = BoundingBox.fromHW(10, 10, 10, 10)
 ```
 
-### some usage...
+### Example
 
 ```typescript
 let bbox1 = new BoundingBox(10, 10, 30, 30);
@@ -138,6 +142,6 @@ console.log(union === new BoundingBox(10, 10, 40, 40));
 // true
 ```
 
-# License
+## License
 
 MIT

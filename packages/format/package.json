@@ -5,7 +5,6 @@
   "main": "dist/bb-renderer.js",
   "scripts": {
     "build": "tsc",
-    "watch": "tsc --watch",
     "rebuild": "npm run clean && tsc",
     "test": "jest",
     "clean": "rimraf dist/",
@@ -32,8 +31,7 @@
   "author": "marr11317",
   "license": "MIT",
   "dependencies": {
-    "bounding-boxes": "^3.2.0",
-    "chord-symbol": "file:../chord-symbol"
+    "chord-symbol": "file:../../../chordsPlayer/chord-symbol"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",

@@ -4,12 +4,11 @@
   "description": "chord sheet web renderer",
   "main": "dist/bounding-boxes.js",
   "scripts": {
-    "build": "npm run clean && tsc",
+    "build": "tsc",
+    "rebuild": "npm run clean && npm run build",
     "test": "jest",
     "clean": "rimraf dist/",
-    "coverage": "jest --coverage",
-    "lint": "eslint . --ext .ts --fix",
-    "lint:ci": "eslint . --ext .ts"
+    "coverage": "jest --coverage"
   },
   "keywords": [
     "music",
