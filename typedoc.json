@@ -1,0 +1,9 @@
+{
+    "inputFiles": [
+        "./src"
+    ],
+    "mode": "file",
+    "out": "docs",
+    "readme": "Readme.md",
+    "theme": "minimal"
+}
