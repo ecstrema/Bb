@@ -52,6 +52,7 @@ export class BbSegment extends BbElement {
         return Promise.all(promises).then(() => {
             this.placeElements();
             this.encloseChildren();
+            this.bbox.x2 += this.rightFixedMargin // TODO: add spatium
         });
     }
 
