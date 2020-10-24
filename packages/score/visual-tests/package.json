@@ -1,0 +1,31 @@
+{
+  "name": "chord-symbol-demo",
+  "version": "0.1.0",
+  "description": "chord-symbol demo site",
+  "private": "true",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "server": "node server.js",
+    "start": "cd .. && npm run build && cd visual-tests && webpack-dev-server",
+    "watch": "webpack --watch"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.2",
+    "html-webpack-plugin": "^4.3.0",
+    "terser-webpack-plugin": "^3.0.6",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5"
+  }
+}

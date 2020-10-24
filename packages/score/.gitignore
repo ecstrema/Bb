@@ -1,0 +1,4 @@
+node_modules*
+dist*
+coverage*
+visual-tests/build
