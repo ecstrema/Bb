@@ -1,11 +1,11 @@
 /* eslint-env node */
 /**
- * This is the webpack configuration for the demo page
- */
+* This is the webpack configuration for the demo page
+*/
 const path = require('path');
 
 const {CleanWebpackPlugin}  = require('clean-webpack-plugin');
-const CopyPlugin			= require('copy-webpack-plugin');
+const CopyPlugin            = require('copy-webpack-plugin');
 
 const buildDir = path.resolve(__dirname, 'dist');
 
@@ -33,6 +33,7 @@ const config = {
                 { from: 'src/chordSymbol.png', to: buildDir },
                 { from: 'src/style.css', to: buildDir },
                 { from: 'src/index.html', to: buildDir },
+                { from: 'src/PetalumaScript.otf', to: buildDir },
             ]
         }),
     ],

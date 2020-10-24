@@ -1,4 +1,3 @@
-import { BoundingBox } from "bounding-boxes";
 import { BbFormat } from "../../src/bb-format";
 import { BbText } from "../../src/bb-text";
 
@@ -7,9 +6,12 @@ const chordInput = document.getElementById('chordInput') as HTMLInputElement
 const showBboxes = document.getElementById('showbboxes') as HTMLInputElement
 const showSymbol = document.getElementById('showSymbol') as HTMLInputElement
 
+const chordSymbolFont = 'Petaluma Script'
+
 const singleCtx = singleCanvas.getContext('2d') as CanvasRenderingContext2D
-var font = "80px Roboto"
-singleCtx.font = font
+const singleCtxFontSize = 80
+var singleCtxFont = singleCtxFontSize + "px " + chordSymbolFont
+singleCtx.font = singleCtxFont
 const formatter = new BbFormat(singleCtx)
 
 const margin = 10;
@@ -24,7 +26,7 @@ function updateCanvas() {
 
         singleCtx.clearRect(0, 0, singleCanvas.width, singleCanvas.height);
         // This has to be reset because the context is reset when the canvas get resized.
-        singleCtx.font = font;
+        singleCtx.font = singleCtxFont;
 
         const bbox = laidOutChord.bbox;
         singleCtx.translate(margin, margin - bbox.y);
@@ -89,7 +91,7 @@ window.onresize = (ev: UIEvent )=> {
 const showcaseCtx = showcase.getContext('2d');
 const showcaseFormatter = new BbFormat(showcaseCtx, {}, {  });
 const showCaseFontSize = 30;
-const showcaseFont = showCaseFontSize + 'px Roboto';
+const showcaseFont = showCaseFontSize + 'px ' + chordSymbolFont;
 showcaseCtx.font = showcaseFont;
 
 const showcaseMargin = 30;
@@ -97,6 +99,7 @@ const showcaseSystemSpacing = 30;
 const barlineHeight = 35;
 
 function drawShowCase() {
+    showcaseCtx.clearRect(0, 0, showcase.width, showcase.height);
     const width = showcase.width - showcaseMargin * 2;
 
     const texts: BbText[][] = chords.map((line: string[]) => {
@@ -130,6 +133,4 @@ function drawShowCase() {
 
 
 drawShowCase()
-
-
 updateCanvas();

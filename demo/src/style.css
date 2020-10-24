@@ -8,6 +8,11 @@ body {
     text-align: center;
 }
 
+@font-face {
+  font-family: 'Petaluma Script' !important;
+  src: url('./PetalumaScript.otf') format('otf'),
+}
+
 .hidden {
     display: none;
 }
