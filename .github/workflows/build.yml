@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [12.x, 14.x, 15.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
           # remove after stable version released
           npm i -g npm@7
           npm install
-          npm run compile
+          npm run build
           npm run lint
           npm run test
         env:
