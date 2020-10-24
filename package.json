@@ -9,12 +9,15 @@
     "test": "lerna run test"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
+    "eslint": "^7.12.0",
     "lerna": "3.22.1",
-    "prettier": "2.1.2",
     "rimraf": "3.0.2",
     "typescript": "4.0.3"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {}
 }

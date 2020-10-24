@@ -9,8 +9,7 @@
     "test": "jest",
     "clean": "rimraf dist/",
     "build:docs": "rimraf docs/ && typedoc --options typedoc.json",
-    "coverage": "jest --coverage",
-    "prepare": "npm run build && npm run build:docs"
+    "coverage": "jest --coverage"
   },
   "keywords": [
     "music",

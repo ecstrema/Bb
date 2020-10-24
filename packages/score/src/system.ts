@@ -1,6 +1,4 @@
-import { BoundingBox } from 'bounding-boxes';
 import { BbElement } from './element';
-import { BbSegment } from './segment';
 
 /**
  * System element.
