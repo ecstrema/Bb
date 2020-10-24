@@ -1,10 +1,10 @@
-# Bb-format
+# Bb-chord-symbol
 
-Keep track of your elements with bounding boxes.
+Javascript chord symbol rendering library.
 
 ## Very important part
 
-The "bb" in bb-format is pronounced "B flat"
+The "bb" in bb-chord-symbol is pronounced "B flat"
 
 ## Install
 
