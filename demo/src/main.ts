@@ -1,3 +1,4 @@
+import { ContextReplacementPlugin } from "webpack";
 import { BbFormat } from "../../src/bb-format";
 import { BbText } from "../../src/bb-text";
 
@@ -112,7 +113,7 @@ function drawShowCase() {
         let currentX = showcaseMargin;
         let maxHeight = 0;
         let durationTotal = 0;
-        showcaseCtx.fillRect(currentX - 5, currentY - 10, 2, barlineHeight);
+        addBarline();
 
         line.forEach((t: BbText, chordIndex: number) => {
             showcaseFormatter.fillText(t, currentX, currentY + t.bbox.y);
@@ -122,9 +123,20 @@ function drawShowCase() {
             durationTotal += duration;
             currentX += width / 8 * duration;
             if (!(durationTotal % 2)) {
-                showcaseCtx.fillRect(currentX - 5, currentY - 10, 2, barlineHeight);
+                addBarline(chordIndex === 5 && lineIndex === 3);
             }
         });
+
+        function addBarline(last = false) {
+            const dx = currentX - 5;
+            const dy = currentY + showCaseFontSize;
+            showcaseCtx.save()
+            showcaseCtx.translate(dx, dy)
+            showcaseCtx.scale(1.2, 1.5);
+            showcaseCtx.translate(-dx, -dy)
+            showcaseCtx.fillText(last ? "\uD834\uDD02" : "\uD834\uDD00", dx, dy);
+            showcaseCtx.restore()
+        }
 
         currentY += maxHeight + showcaseSystemSpacing;
     });
