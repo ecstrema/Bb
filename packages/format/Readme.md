@@ -4,6 +4,18 @@
 
 Javascript chord symbol rendering library.
 
+- [Bb-chord-symbol](#bb-chord-symbol)
+  - [Very important part](#very-important-part)
+  - [Install](#install)
+  - [Usage](#usage)
+    - [import](#import)
+    - [Basic usage](#basic-usage)
+    - [Advanced usage](#advanced-usage)
+      - [1: tweaking the config](#1-tweaking-the-config)
+      - [2: Post layout processing](#2-post-layout-processing)
+  - [Well that's awesome!](#well-thats-awesome)
+  - [License](#license)
+
 ## Very important part
 
 The "bb" in bb-chord-symbol is pronounced "B flat"

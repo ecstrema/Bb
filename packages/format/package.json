@@ -1,5 +1,5 @@
 {
-  "name": "bb-renderer",
+  "name": "bb-chord-symbol",
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
@@ -42,7 +42,8 @@
     "typescript": "^4.0.2"
   },
   "files": [
-    "dist/*"
+    "dist/*",
+    "img"
   ],
   "types": "dist/main.d.ts",
   "readme": "Readme.md",
