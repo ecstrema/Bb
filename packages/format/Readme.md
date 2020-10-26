@@ -23,7 +23,7 @@ The "bb" in bb-chord-symbol is pronounced "B flat"
 ## Install
 
 ```shell
-    npm install --save bb-format
+npm i bb-format
 ```
 
 ## Usage
@@ -128,3 +128,6 @@ formatter.fillText(laidOutChord, 100, 100);
 ## License
 
 MIT
+
+
+![Giant steps](https://github.com/Marr11317/Bb/raw/master/packages/format/img/GiantSteps.png)
