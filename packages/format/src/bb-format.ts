@@ -166,6 +166,10 @@ export class BbFormat {
                     descriptor = descriptor.replace('min', '-');
                 }
             }
+            if (descriptor === '+') {
+                descriptor = '';
+                root += '+';
+            }
         }
         if (root) {
             currentX = this.layoutRoot(
@@ -255,8 +259,10 @@ export class BbFormat {
             totalHeight += m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
         });
 
+        const isOnlyAlt = extensions.length === 1 && extensions[0] === 'alt';
+
         const extTop = center - totalHeight * .5;
-        if (this.chordSymbolOptions.parentheses.show) {
+        if (this.chordSymbolOptions.parentheses.show && !isOnlyAlt) {
             currentX = this.layoutParenthesis(
                 this.chordSymbolOptions.parentheses.type[0],
                 currentX,
@@ -280,7 +286,7 @@ export class BbFormat {
         })
         currentX += maxExtWidth;
 
-        if (this.chordSymbolOptions.parentheses.show) {
+        if (this.chordSymbolOptions.parentheses.show && !isOnlyAlt) {
             currentX = this.layoutParenthesis(
                 this.chordSymbolOptions.parentheses.type[1],
                 currentX,

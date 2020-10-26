@@ -11,6 +11,9 @@
             "path": "packages/format"
         },
         {
+            "path": "packages/format-demo"
+        },
+        {
             "path": "packages/score"
         }
     ]
