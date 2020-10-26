@@ -1,6 +1,6 @@
 {
   "name": "bb-chord-symbol",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
@@ -42,13 +42,17 @@
     "typescript": "^4.0.2"
   },
   "files": [
-    "dist/*",
-    "img"
+    "dist/*"
   ],
   "types": "dist/main.d.ts",
   "readme": "Readme.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Marr11317/bb-renderer"
-  }
+    "url": "https://github.com/Marr11317/Bb/tree/master/",
+    "directory": "packages/format"
+  },
+  "bugs": {
+    "url": "https://github.com/Marr11317/Bb/issues"
+  },
+  "homepage": "https://github.com/Marr11317/Bb/tree/master/packages/format#readme"
 }

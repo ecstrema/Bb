@@ -1,4 +1,4 @@
-![preview chord symbol](img/preview.png)
+![Preview](https://github.com/Marr11317/Bb/raw/master/packages/format/img/preview.png)
 
 # Bb-chord-symbol
 
@@ -48,7 +48,7 @@ const renderer = new BbFormat(ctx);
 formatter.fillChordSymbol('Bb7#9#5/D', 100, 100);
 ```
 
-![a rendered chord](./img/basicUsage.png)
+![A rendered chord](https://github.com/Marr11317/Bb/raw/master/packages/format/img/basicUsage.png)
 *using font [Petaluma Script](https://github.com/steinbergmedia/petaluma)*
 
 ### Advanced usage
@@ -85,7 +85,7 @@ formatter.rendererOptions = renderConfig;
 formatter.fillChordSymbol('Ab7#9#5/D', 100, 100);
 ```
 
-![a rendered chord](./img/complexExample1.png)
+![A rendered chord](https://github.com/Marr11317/Bb/raw/master/packages/format/img/complexExample1.png)
 *using font [Petaluma Script](https://github.com/steinbergmedia/petaluma)*
 
 #### 2: Post layout processing
@@ -118,7 +118,7 @@ laidOutChord.fragments.filter((v: BbTextFragment) => {
 formatter.fillText(laidOutChord, 100, 100);
 ```
 
-![a rendered chord](./img/complexExample2.png)
+![A rendered chord](https://github.com/Marr11317/Bb/raw/master/packages/format/img/complexExample2.png)
 *using font [Petaluma Script](https://github.com/steinbergmedia/petaluma)*
 
 ## Well that's awesome!

@@ -37,10 +37,11 @@
   "readme": "Readme.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Marr11317/bouncing-score.git"
+    "url": "https://github.com/Marr11317/Bb/tree/master/",
+    "directory": "packages/score"
   },
   "bugs": {
-    "url": "https://github.com/Marr11317/bouncing-score/issues"
+    "url": "https://github.com/Marr11317/Bb/issues"
   },
-  "homepage": "https://github.com/Marr11317/bouncing-score#readme"
+  "homepage": "https://github.com/Marr11317/Bb/tree/master/packages/score#readme"
 }

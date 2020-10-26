@@ -45,9 +45,13 @@
   "private": false,
   "files": ["dist/*"],
   "types": "dist/tree-node.d.ts",
-  "readme": "Readme.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Marr11317/bb-tree-model"
-  }
+    "url": "https://github.com/Marr11317/Bb/tree/master/",
+    "directory": "packages/tree-model"
+  },
+  "bugs": {
+    "url": "https://github.com/Marr11317/Bb/issues"
+  },
+  "homepage": "https://github.com/Marr11317/Bb/tree/master/packages/tree-model#readme"
 }

@@ -54,6 +54,11 @@
   "readme": "Readme.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Marr11317/bounding-boxes"
-  }
+    "url": "https://github.com/Marr11317/Bb/tree/master/",
+    "directory": "packages/bounding-box"
+  },
+  "bugs": {
+    "url": "https://github.com/Marr11317/Bb/issues"
+  },
+  "homepage": "https://github.com/Marr11317/Bb/tree/master/packages/bounding-box#readme"
 }
