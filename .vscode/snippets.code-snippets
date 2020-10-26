@@ -88,6 +88,6 @@
 			"    this.bbox.width  = 0",
 			"}",
 		],
-		"description": "Add inheritdoc jsdoc comment."
+		"description": "layout function"
 	},
 }
