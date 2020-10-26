@@ -6,7 +6,7 @@
     "test": "lerna run test",
     "lint": "eslint . --ext .ts --fix",
     "lint:ci": "eslint . --ext .ts",
-    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
+    "clean": "rimraf \"packages/**/dist\" \"packages/**/*.tsbuildinfo\"",
     "prepare": "npm run build"
   },
   "devDependencies": {
