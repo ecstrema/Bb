@@ -142,6 +142,10 @@ console.log(union === new BoundingBox(10, 10, 40, 40));
 // true
 ```
 
+## Wow, all I've been dreaming of!
+
+*bb-score is licensed under the MIT License. That means you may do whatever you wish with it. However, developing such libraries takes considerable time and effort, so if you find it valuable, please consider supporting me with a donation [via paypal.](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S2ZCFC2QSQVQ4&source=url)*
+
 ## License
 
 MIT

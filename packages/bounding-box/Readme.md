@@ -200,6 +200,10 @@ export declare class BoundingBox {
 }
 ```
 
+## I love that thing
+
+*bounding-box is licensed under the MIT License. That means you may do whatever you wish with it. However, developing such libraries takes considerable time and effort, so if you find it valuable, please consider supporting me with a donation [via paypal.](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S2ZCFC2QSQVQ4&source=url)*
+
 ## License
 
 MIT

@@ -10,6 +10,7 @@ Fully featured tree structure without superfluous needs.
     - [Docs](#docs)
     - [Getting started](#getting-started)
     - [Next steps](#next-steps)
+  - [Wotowooooow!](#wotowooooow)
   - [License](#license)
 
 ## Very important part
@@ -188,6 +189,10 @@ Wonderful, isn't it?
 ### Next steps
 
 Explore [the docs](https://marr11317.github.io/bb-tree-model/)
+
+## Wotowooooow!
+
+*bb-tree-model is licensed under the MIT License. That means you may do whatever you wish with it. However, developing such libraries takes considerable time and effort, so if you find it valuable, please consider supporting me with a donation [via paypal.](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S2ZCFC2QSQVQ4&source=url)*
 
 ## License
 
