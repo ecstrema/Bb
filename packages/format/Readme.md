@@ -2,7 +2,7 @@
 
 # Bb-chord-symbol
 
-Javascript chord symbol rendering library.
+HTML5's canvas' chord symbol rendering library.
 
 - [Bb-chord-symbol](#bb-chord-symbol)
   - [Very important part](#very-important-part)

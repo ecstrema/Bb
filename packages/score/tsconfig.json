@@ -9,7 +9,7 @@
   ],
   "references": [
     {
-      "path": "../bounding-box"
+      "path": "../bounding-boxes"
     },
     {
       "path": "../tree-model"

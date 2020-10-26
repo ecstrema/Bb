@@ -31,7 +31,8 @@
   "author": "marr11317",
   "license": "MIT",
   "dependencies": {
-    "chord-symbol": "file:..\\..\\..\\chordsPlayer\\chord-symbol"
+    "chord-symbol": "^1.1.0",
+    "bounding-boxes": "^3.0.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
