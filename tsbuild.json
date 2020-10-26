@@ -2,7 +2,7 @@
     "files": [],
     "references": [
         {
-            "path": "packages/bounding-box"
+            "path": "packages/bounding-boxes"
         },
         {
             "path": "packages/tree-model"

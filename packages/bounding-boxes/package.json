@@ -55,10 +55,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Marr11317/Bb/tree/master/",
-    "directory": "packages/bounding-box"
+    "directory": "packages/bounding-boxes"
   },
   "bugs": {
     "url": "https://github.com/Marr11317/Bb/issues"
   },
-  "homepage": "https://github.com/Marr11317/Bb/tree/master/packages/bounding-box#readme"
+  "homepage": "https://github.com/Marr11317/Bb/tree/master/packages/bounding-boxes#readme"
 }
