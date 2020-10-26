@@ -4,8 +4,8 @@
 */
 const path = require('path');
 
-const {CleanWebpackPlugin}  = require('clean-webpack-plugin');
-const CopyPlugin            = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const buildDir = path.resolve(__dirname, 'dist');
 
@@ -45,10 +45,15 @@ const config = {
                 use: 'ts-loader',
                 exclude: /node_modules/,
             },
-        ]
+        ],
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        modules: [
+            path.resolve(__dirname, '../node_modules'),
+            path.resolve(__dirname, '../../node_modules'),
+            'node_modules'
+        ]
     },
 };
 

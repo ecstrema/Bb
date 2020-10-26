@@ -20,5 +20,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "chokidar": "^3.4.3"
+  }
 }
