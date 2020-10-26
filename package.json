@@ -2,11 +2,12 @@
   "name": "npm-ts-workspaces-example",
   "private": true,
   "scripts": {
-    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
     "build": "tsc -b tsbuild.json",
+    "test": "lerna run test",
     "lint": "eslint . --ext .ts --fix",
     "lint:ci": "eslint . --ext .ts",
-    "test": "lerna run test"
+    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\"",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.4.0",

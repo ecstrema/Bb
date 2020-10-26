@@ -2,16 +2,16 @@
     "files": [],
     "references": [
         {
-            "path": "packages/format"
-        },
-        {
-            "path": "packages/score"
+            "path": "packages/bounding-box"
         },
         {
             "path": "packages/tree-model"
         },
         {
-            "path": "packages/bounding-box"
+            "path": "packages/format"
+        },
+        {
+            "path": "packages/score"
         }
     ]
 }
