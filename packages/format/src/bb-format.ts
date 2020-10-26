@@ -83,14 +83,6 @@ export class BbFormat {
      * Similar to the HTML5 canvas' `fillText` method,
      * this function draws laid out text on the canvas.
      *
-     * Not true anymore!!!
-     * A note on baselines:
-     * - top here signifies the top of the chord symbol.
-     * - hanging is for the top of the chord Root.
-     * - ideographic is for center.
-     * - alphabetic means the bottom of the Root symbol.
-     * - bottom is the bottom of the whole chord: it might be lower if there is a bass note.
-     *
      * @param text The Text object to paint.
      * @param x The x pos of drawing.
      * @param y The y pos of drawing.
@@ -107,7 +99,7 @@ export class BbFormat {
         this.context.textBaseline = 'alphabetic'
         text.fragments.forEach(fragment => {
             const actualX = fragment.bbox.x + x;
-            const actualY = fragment.bbox.y + y + fragment.baselineHeight - text.bbox.y;
+            const actualY = fragment.bbox.y + y + fragment.baselineHeight;
 
             if (fragment.scaleX !== 1 || fragment.scaleY !== 1 || fragment.angle !== 0) {
                 this.context.save()

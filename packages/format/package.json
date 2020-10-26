@@ -2,10 +2,11 @@
   "name": "bb-renderer",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/bb-renderer.js",
+  "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
     "rebuild": "npm run clean && tsc",
+    "watch": "tsc --watch",
     "test": "jest",
     "clean": "rimraf dist/",
     "build:docs": "rimraf docs/ && typedoc --options typedoc.json",
@@ -30,7 +31,7 @@
   "author": "marr11317",
   "license": "MIT",
   "dependencies": {
-    "chord-symbol": "^1.1.0"
+    "chord-symbol": "file:..\\..\\..\\chordsPlayer\\chord-symbol"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
@@ -43,7 +44,7 @@
   "files": [
     "dist/*"
   ],
-  "types": "dist/bb-renderer.d.ts",
+  "types": "dist/main.d.ts",
   "readme": "Readme.md",
   "repository": {
     "type": "git",
