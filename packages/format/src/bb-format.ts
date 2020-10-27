@@ -155,15 +155,9 @@ export class BbFormat {
         if (descriptor) {
             // Move to root to center
             if (this.chordSymbolOptions.useMinusSignForMinorChords) {
-                if (descriptor === 'mi' || descriptor === '-' || descriptor === 'min') {
+                if (descriptor.startsWith('mi') || descriptor.startsWith('-')) {
                     descriptor = '';
                     root += '-';
-                }
-                else if (descriptor.startsWith('mi')) {
-                    descriptor = descriptor.replace('mi', '-');
-                }
-                else if (descriptor.startsWith('min')) {
-                    descriptor = descriptor.replace('min', '-');
                 }
             }
             if (descriptor === '+') {

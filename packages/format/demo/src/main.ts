@@ -1,5 +1,6 @@
-import { BbTextFragment } from "bb-chord-symbol";
-import { BbFormat, BbText } from "bb-chord-symbol";
+import { BbFormat } from "../../src/bb-format";
+import { BbText } from "../../src/bb-text";
+import { BbTextFragment } from "../../src/bb-text-fragment";
 
 const singleCanvas = document.getElementById("singleCanvas") as HTMLCanvasElement;
 const chordInput = document.getElementById('chordInput') as HTMLInputElement;

@@ -25,7 +25,5 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "bb-chord-symbol": "^1.0.6",
-    "bounding-boxes": "^3.2.0"
   }
 }

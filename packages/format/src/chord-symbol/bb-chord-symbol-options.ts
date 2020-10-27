@@ -49,8 +49,7 @@ export class BbChordSymbolOptions {
     bassYOffset: number = 0.27;
 
     /**
-     * Wheter to use a '-' sign for minor chords instead of 'mi'
-     *
+     * Whether to use a '-' sign for minor chords instead of 'mi'
      */
     useMinusSignForMinorChords: boolean = true;
 }
