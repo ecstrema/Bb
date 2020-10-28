@@ -67,7 +67,7 @@ const formatter = new BbFormat(singleCtx);
 const options = new BbChordSymbolOptions();
 options.parentheses.type = '[]';
 options.useMinusSignForMinorChords = false;
-options.descriptorVerticalOffset = 0;
+options.descriptor.verticalOffset = 0;
 options.separator.angle = Math.PI * 20 / 360;
 
 formatter.chordSymbolOptions = options;

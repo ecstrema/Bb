@@ -31,8 +31,8 @@
   "author": "marr11317",
   "license": "MIT",
   "dependencies": {
-    "chord-symbol": "^1.1.0",
-    "bounding-boxes": "^3.0.2"
+    "bounding-boxes": "^3.0.2",
+    "chord-symbol": "^1.1.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",

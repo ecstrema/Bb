@@ -1,5 +1,6 @@
 import { BbChordSymbolParenthesesOptions } from "./bb-chord-symbol-parentheses-options";
 import { BbSeparatorOptions } from "./bb-separator-options";
+import { BbChordSymbolDescriptorOptions } from "./bb-chord-symbol-descriptor-options";
 
 /**
  * The options that can be passed to a BbRenderer
@@ -10,26 +11,27 @@ import { BbSeparatorOptions } from "./bb-separator-options";
  * @class BbChordSymbolOptions
  */
 export class BbChordSymbolOptions {
+
     /**
-     * The horizontal inset to apply to the descriptor.
+     * Options that apply to the descriptor.
      * The descriptor is everything except the root and bass notes.
-     *
-     * @note this value is a multiplier of the font size.
      */
-    descriptorHorizontalInset: number = 0;
-    /**
-     * The vertical offset to apply to the descriptor.
-     * The descriptor is everything except the root and bass notes.
-     *
-     * @note this value is a multiplier of the font size.
-     */
-    descriptorVerticalOffset: number = 0.35;
+    descriptor = new BbChordSymbolDescriptorOptions();
 
     /**
      * The vertical margin between extensions.
      * @note this value is a multiplier of the font size.
+     *
+     * @default 0.05
      */
     extensionsVerticalMargin: number = 0.05;
+
+    /**
+     * Extensions are often a little smaller than the root and bass symbols
+     *
+     * @default 0.9
+     */
+    extensionsScale: number = 0.9;
 
     /**
      * Options applying to parentheses.
@@ -45,11 +47,13 @@ export class BbChordSymbolOptions {
 
     /**
      * Apply a relative Y offset to the bass note.
+     * @default 0.27
      */
     bassYOffset: number = 0.27;
 
     /**
      * Whether to use a '-' sign for minor chords instead of 'mi'
+     * @default true
      */
     useMinusSignForMinorChords: boolean = true;
 }

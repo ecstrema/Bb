@@ -155,9 +155,15 @@ export class BbFormat {
         if (descriptor) {
             // Move to root to center
             if (this.chordSymbolOptions.useMinusSignForMinorChords) {
-                if (descriptor.startsWith('mi') || descriptor.startsWith('-')) {
+                if (descriptor === 'mi' || descriptor === '-' || descriptor === 'min') {
                     descriptor = '';
                     root += '-';
+                }
+                else if (descriptor.startsWith('mi')) {
+                    descriptor = descriptor.replace('mi', '-');
+                }
+                else if (descriptor.startsWith('min')) {
+                    descriptor = descriptor.replace('min', '-');
                 }
             }
             if (descriptor === '+') {
@@ -217,23 +223,31 @@ export class BbFormat {
         )
         fragments.push(r)
 
-        return r.bbox.width - fontSize * this.chordSymbolOptions.descriptorHorizontalInset;
+        return r.bbox.width - fontSize * this.chordSymbolOptions.descriptor.horizontalInset;
     }
 
     private layoutDescriptor(descriptor: string, currentX: number, fragments: BbTextFragment[], fontSize: number): {currentX: number, center: number} {
-        const m = this.context.measureText(descriptor);
-        const inset = fontSize * this.chordSymbolOptions.descriptorHorizontalInset;
+        const metrics = this.context.measureText(descriptor);
+        const scale = this.chordSymbolOptions.descriptor.scale;
+        const m: UsefulTextMetrics = {
+            actualBoundingBoxAscent: metrics.actualBoundingBoxAscent * scale,
+            actualBoundingBoxDescent: metrics.actualBoundingBoxDescent * scale,
+            width: metrics.width * scale
+        }
+        const inset = fontSize * this.chordSymbolOptions.descriptor.horizontalInset;
 
         const bbox = BoundingBox.fromHW(
             m.actualBoundingBoxAscent + m.actualBoundingBoxDescent,
             m.width,
             currentX - inset,
-            -fontSize * this.chordSymbolOptions.descriptorVerticalOffset
+            -fontSize * this.chordSymbolOptions.descriptor.verticalOffset
         )
         const d = new BbTextFragment(
             BbFormatUtil.replaceSharpsFlats(descriptor),
             bbox,
-            m.actualBoundingBoxAscent
+            m.actualBoundingBoxAscent,
+            scale,
+            scale
             );
         fragments.push(d);
 
@@ -247,8 +261,16 @@ export class BbFormat {
         let maxExtWidth = 0;
         let totalHeight = extMargin * (extensions.length - 1);
 
+
+        const extMetrics: UsefulTextMetrics[] = []
         extensions.forEach((ext: string) => {
-            const m = this.context.measureText(BbFormatUtil.replaceSharpsFlats(ext));
+            const metrics = this.context.measureText(BbFormatUtil.replaceSharpsFlats(ext));
+            const m: UsefulTextMetrics = {
+                actualBoundingBoxAscent: metrics.actualBoundingBoxAscent * this.chordSymbolOptions.extensionsScale,
+                actualBoundingBoxDescent: metrics.actualBoundingBoxDescent * this.chordSymbolOptions.extensionsScale,
+                width: metrics.width * this.chordSymbolOptions.extensionsScale
+            }
+            extMetrics.push(m)
             maxExtWidth = Math.max(maxExtWidth, m.width);
             totalHeight += m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
         });
@@ -274,7 +296,8 @@ export class BbFormat {
                 currentX,
                 currentY,
                 fragments,
-                maxExtWidth
+                maxExtWidth,
+                extMetrics[index]
                 );
             currentY += extMargin;
         })
@@ -330,8 +353,7 @@ export class BbFormat {
         return currentX + metrics.width;
     }
 
-    private addExtension(extension: string, currentX: number, currentY: number, fragments: BbTextFragment[], maxExtWidth: number): number {
-        const metrics = this.context.measureText(extension);
+    private addExtension(extension: string, currentX: number, currentY: number, fragments: BbTextFragment[], maxExtWidth: number, metrics: UsefulTextMetrics): number {
         const h = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 
         const e = new BbTextFragment (
@@ -342,7 +364,9 @@ export class BbFormat {
                 currentX + (maxExtWidth - metrics.width) * .5,
                 currentY
             ),
-            metrics.actualBoundingBoxAscent
+            metrics.actualBoundingBoxAscent,
+            this.chordSymbolOptions.extensionsScale,
+            this.chordSymbolOptions.extensionsScale
         );
         fragments.push(e);
 
@@ -402,4 +426,10 @@ export class BbFormat {
         return currentX + metrics.width;
     }
 
+}
+
+type UsefulTextMetrics = {
+    actualBoundingBoxAscent: number,
+    actualBoundingBoxDescent: number,
+    width: number
 }
