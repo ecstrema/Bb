@@ -68,12 +68,10 @@ export class BbFormat {
         const parsedChord = this.parseChord(chordSymbol);
 
         if (!parsedChord) {
-            // console.log('Invalid chord given: ' + chordSymbol)
             return;
         }
         const text = this.layoutChordSymbol(chordSymbol);
         if (!text) {
-            // console.log('Text could not be laid out: ' + chordSymbol)
             return;
         }
         this.fillText(text, x, y);

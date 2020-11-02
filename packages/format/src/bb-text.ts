@@ -80,8 +80,6 @@ export class BbText {
             fragments.map((fragment: BbTextFragment) => { return fragment.bbox })
         );
 
-        console.log(fragments)
-
         this._yOverflow = -this.bbox.y1;
         this._bbox.move(0, 0);
     }
